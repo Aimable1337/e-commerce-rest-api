@@ -2,7 +2,6 @@ package com.spring.rest.ecommerce.service;
 
 import com.spring.rest.ecommerce.entity.Product;
 import com.spring.rest.ecommerce.repository.ProductRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -37,6 +36,10 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void deleteByID(long theId) {
-        productRepository.deleteById(theId);
+        if (productRepository.findById(theId).isPresent()){
+            productRepository.deleteById(theId);
+        } else {
+            throw new RuntimeException("Did not found product by id - " + theId);
+        }
     }
 }
