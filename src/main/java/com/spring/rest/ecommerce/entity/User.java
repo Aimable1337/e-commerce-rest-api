@@ -1,20 +1,25 @@
 package com.spring.rest.ecommerce.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class User {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
     private long userID;
 
-    private String accountName;
+    @Column(name = "user_name")
+    private String userName;
 
+    @Column(name = "first_name")
     private String firstName;
 
+    @Column(name = "last_name")
     private String lastName;
 
+    @Column(name = "email")
     private String email;
 
     public long getUserID() {
@@ -25,12 +30,12 @@ public class User {
         this.userID = userID;
     }
 
-    public String getAccountName() {
-        return accountName;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setAccountName(String accountName) {
-        this.accountName = accountName;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getFirstName() {
@@ -61,7 +66,7 @@ public class User {
     public String toString() {
         return "User{" +
                 "userID=" + userID +
-                ", accountName='" + accountName + '\'' +
+                ", accountName='" + userName + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
