@@ -1,8 +1,8 @@
 package com.spring.rest.ecommerce.RestController;
 
-import com.spring.rest.ecommerce.entity.Product;
+import com.spring.rest.ecommerce.entity.User;
 import com.spring.rest.ecommerce.headers.HeaderGenerator;
-import com.spring.rest.ecommerce.service.ProductService;
+import com.spring.rest.ecommerce.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,26 +12,25 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/product")
-public class ProductRestController {
+@RequestMapping("/api/user")
+public class UserRestController {
 
-    private final ProductService productService;
+    private final UserService userService;
 
     private final HeaderGenerator headerGenerator;
 
     @Autowired
-    public ProductRestController(ProductService theProductService,
-                                 HeaderGenerator theHeaderGenerator){
-        headerGenerator = theHeaderGenerator;
-        productService = theProductService;
+    public UserRestController(UserService userService, HeaderGenerator headerGenerator) {
+        this.userService = userService;
+        this.headerGenerator = headerGenerator;
     }
 
-    @GetMapping("/products")
-    public ResponseEntity<List<Product>> getProducts(){
-        List<Product> products = productService.findAll();
-        if (!products.isEmpty()){
+    @GetMapping("/users")
+    public ResponseEntity<List<User>> getUsers(){
+        List<User> users = userService.findAll();
+        if (!users.isEmpty()){
             return new ResponseEntity<>(
-                    products,
+                    users,
                     headerGenerator.getHeadersForSuccessGetMethod(),
                     HttpStatus.OK
             );
@@ -43,13 +42,13 @@ public class ProductRestController {
         );
     }
 
-    @GetMapping("/products/{theId}")
-    public ResponseEntity<Product> getProductById(@PathVariable long theId){
-        Product product = productService.findByID(theId);
-        if (product != null){
+    @GetMapping("/users/{theId}")
+    public ResponseEntity<User> getUserById(@PathVariable long theId){
+        User user = userService.findByID(theId);
+        if (user != null){
 
             return new ResponseEntity<>(
-                    product,
+                    user,
                     headerGenerator.getHeadersForSuccessGetMethod(),
                     HttpStatus.OK
             );
@@ -60,31 +59,31 @@ public class ProductRestController {
         );
     }
 
-    @PostMapping("/products")
-    public ResponseEntity<Product> createProduct(@RequestBody Product theProduct,
+    @PostMapping("/users")
+    public ResponseEntity<User> createUser(@RequestBody User theUser,
                                                  HttpServletRequest request){
-        theProduct.setProductID(0);
-        productService.save(theProduct);
+        theUser.setUserID(0);
+        userService.save(theUser);
         return new ResponseEntity<>(
-                theProduct,
-                headerGenerator.getHeadersForSuccessPostMethod(request, theProduct.getProductID()),
+                theUser,
+                headerGenerator.getHeadersForSuccessPostMethod(request, theUser.getUserID()),
                 HttpStatus.CREATED
         );
     }
 
     @PostMapping("/products")
-    public ResponseEntity<Product> updateProduct(@RequestBody Product theProduct,
+    public ResponseEntity<User> updateProduct(@RequestBody User theUser,
                                                  HttpServletRequest request){
-        if(productService.findByID(theProduct.getProductID()) != null){
-            productService.save(theProduct);
+        if(userService.findByID(theUser.getUserID()) != null){
+            userService.save(theUser);
             return new ResponseEntity<>(
-                    theProduct,
-                    headerGenerator.getHeadersForSuccessPostMethod(request, theProduct.getProductID()),
+                    theUser,
+                    headerGenerator.getHeadersForSuccessPostMethod(request, theUser.getUserID()),
                     HttpStatus.ACCEPTED
             );
         }
         return new ResponseEntity<>(
-                theProduct,
+                theUser,
                 headerGenerator.getHeadersForError(),
                 HttpStatus.NOT_FOUND
         );
@@ -92,16 +91,16 @@ public class ProductRestController {
 
     @DeleteMapping("/products/{theId}")
     public ResponseEntity<String> deleteProductById(@PathVariable long theId){
-        if(productService.findByID(theId) != null){
-            productService.deleteByID(theId);
+        if(userService.findByID(theId) != null){
+            userService.deleteByID(theId);
             return new ResponseEntity<>(
-                    "Product deleted!",
+                    "User deleted!",
                     headerGenerator.getHeadersForSuccessGetMethod(),
                     HttpStatus.ACCEPTED
             );
         }
         return new ResponseEntity<>(
-                "Product doesn't exist!",
+                "User doesn't exist!",
                 headerGenerator.getHeadersForError(),
                 HttpStatus.NOT_FOUND
         );
