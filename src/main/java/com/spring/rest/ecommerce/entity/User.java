@@ -3,6 +3,7 @@ package com.spring.rest.ecommerce.entity;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "user")
 public class User {
 
     @Id
