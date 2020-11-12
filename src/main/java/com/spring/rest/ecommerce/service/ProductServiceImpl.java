@@ -22,11 +22,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product findByID(long theId) {
-        if (productRepository.findById(theId).isPresent()){
-            return productRepository.findById(theId).get();
-        } else {
-            throw new RuntimeException("Did not found product by id - " + theId);
-        }
+        return productRepository.findById(theId).get();
     }
 
     @Override
@@ -36,10 +32,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void deleteByID(long theId) {
-        if (productRepository.findById(theId).isPresent()){
-            productRepository.deleteById(theId);
-        } else {
-            throw new RuntimeException("Did not found product by id - " + theId);
-        }
+        productRepository.deleteById(theId);
     }
 }
+

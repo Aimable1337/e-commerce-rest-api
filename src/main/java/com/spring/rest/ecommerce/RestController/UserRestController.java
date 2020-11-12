@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/user")
+@RequestMapping("/user-api")
 public class UserRestController {
 
     private final UserService userService;
@@ -71,8 +71,8 @@ public class UserRestController {
         );
     }
 
-    @PostMapping("/products")
-    public ResponseEntity<User> updateProduct(@RequestBody User theUser,
+    @PutMapping("/users")
+    public ResponseEntity<User> updateUser(@RequestBody User theUser,
                                                  HttpServletRequest request){
         if(userService.findByID(theUser.getUserID()) != null){
             userService.save(theUser);
@@ -89,8 +89,8 @@ public class UserRestController {
         );
     }
 
-    @DeleteMapping("/products/{theId}")
-    public ResponseEntity<String> deleteProductById(@PathVariable long theId){
+    @DeleteMapping("/users/{theId}")
+    public ResponseEntity<String> deleteUsersById(@PathVariable long theId){
         if(userService.findByID(theId) != null){
             userService.deleteByID(theId);
             return new ResponseEntity<>(

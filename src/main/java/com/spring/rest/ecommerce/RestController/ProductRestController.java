@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/product")
+@RequestMapping("/product-api")
 public class ProductRestController {
 
     private final ProductService productService;
@@ -72,7 +72,7 @@ public class ProductRestController {
         );
     }
 
-    @PostMapping("/products")
+    @PutMapping("/products")
     public ResponseEntity<Product> updateProduct(@RequestBody Product theProduct,
                                                  HttpServletRequest request){
         if(productService.findByID(theProduct.getProductID()) != null){
