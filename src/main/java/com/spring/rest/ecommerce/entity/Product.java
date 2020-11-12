@@ -1,18 +1,23 @@
 package com.spring.rest.ecommerce.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
+@Table(name = "products")
 public class Product {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "product_id")
     private long productID;
 
+    @Column(name = "product_name")
     private String productName;
 
+    @Column(name = "product_category")
     private String productCategory;
 
+    @Column(name = "product_price")
     private int productPrice;
 
     public long getProductID() {
