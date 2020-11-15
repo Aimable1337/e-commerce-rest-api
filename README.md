@@ -2,6 +2,7 @@
 It's my first "big" project for educational purposes.
 
 Technologies: 
+ - Java 8
  - Spring Boot 2.3.5 RELEASE
  - Spring Security 5.3.5 RELEASE
  - Spring Data Jpa 2.3.5 RELEASE
