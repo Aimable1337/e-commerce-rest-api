@@ -1,6 +1,7 @@
 package com.spring.rest.ecommerce.service;
 
 import com.spring.rest.ecommerce.entity.Product;
+import com.spring.rest.ecommerce.exception.NotFoundException;
 import com.spring.rest.ecommerce.repository.ProductRepository;
 import org.springframework.stereotype.Service;
 
@@ -17,22 +18,30 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<Product> findAll() {
+        if(productRepository.findAll().isEmpty())
+            throw new NotFoundException("We have no products :O");
         return productRepository.findAll();
     }
 
     @Override
     public Product findByID(long theId) {
-        return productRepository.findById(theId).get();
+        if (productRepository.findById(theId).isPresent())
+            return productRepository.findById(theId).get();
+        throw new NotFoundException("Product is not found by id: " + theId);
     }
 
     @Override
     public void save(Product theProduct) {
-        productRepository.save(theProduct);
+        if(theProduct.getProductID() == 0 || productRepository.findById(theProduct.getProductID()).isPresent())
+            productRepository.save(theProduct);
+        throw new NotFoundException("Product with id: " + theProduct.getProductID() + " does not exist");
     }
 
     @Override
     public void deleteByID(long theId) {
-        productRepository.deleteById(theId);
+        if (productRepository.findById(theId).isPresent())
+            productRepository.deleteById(theId);
+        throw new NotFoundException("Product with id: " + theId + " does not exist");
     }
 }
 

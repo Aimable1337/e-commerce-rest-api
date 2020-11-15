@@ -28,18 +28,11 @@ public class UserRestController {
     @GetMapping("/users")
     public ResponseEntity<List<User>> getUsers(){
         List<User> users = userService.findAll();
-        if (!users.isEmpty()){
             return new ResponseEntity<>(
                     users,
                     headerGenerator.getHeadersForSuccessGetMethod(),
                     HttpStatus.OK
             );
-        }
-
-        return new ResponseEntity<>(
-                headerGenerator.getHeadersForError(),
-                HttpStatus.NOT_FOUND
-        );
     }
 
     @GetMapping("/users/{theId}")

@@ -1,7 +1,7 @@
 package com.spring.rest.ecommerce.service;
 
 import com.spring.rest.ecommerce.entity.User;
-import com.spring.rest.ecommerce.exception.UserNotFoundException;
+import com.spring.rest.ecommerce.exception.NotFoundException;
 import com.spring.rest.ecommerce.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
@@ -18,16 +18,16 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public List<User> findAll() {
+        if(userRepository.findAll().isEmpty())
+            throw new NotFoundException("We have no users :(");
         return userRepository.findAll();
     }
 
     @Override
     public User findByID(long theId) {
-        if(userRepository.findById(theId).isPresent()){
+        if(userRepository.findById(theId).isPresent())
             return userRepository.findById(theId).get();
-        } else {
-            throw new UserNotFoundException("User is not found by id: " + theId);
-        }
+            throw new NotFoundException("User is not found by id: " + theId);
     }
 
     @Override
@@ -35,7 +35,7 @@ public class UserServiceImpl implements UserService{
         if(theUser.getUserID() == 0 || userRepository.findById(theUser.getUserID()).isPresent()){
             userRepository.save(theUser);
         } else {
-            throw new UserNotFoundException("User with id: " + theUser.getUserID() + " does not exist");
+            throw new NotFoundException("User with id: " + theUser.getUserID() + " does not exist");
         }
     }
 
@@ -44,7 +44,7 @@ public class UserServiceImpl implements UserService{
         if(userRepository.findById(theId).isPresent()){
             userRepository.deleteById(theId);
         } else {
-            throw new UserNotFoundException("User with id: " + theId + " does not exist");
+            throw new NotFoundException("User with id: " + theId + " does not exist");
         }
     }
 }
