@@ -44,19 +44,11 @@ public class UserRestController {
 
     @GetMapping("/users/{theId}")
     public ResponseEntity<User> getUserById(@PathVariable long theId){
-        User user = userService.findByID(theId);
-        if (user != null){
-
             return new ResponseEntity<>(
-                    user,
+                    userService.findByID(theId),
                     headerGenerator.getHeadersForSuccessGetMethod(),
                     HttpStatus.OK
             );
-        }
-        return new ResponseEntity<>(
-                headerGenerator.getHeadersForError(),
-                HttpStatus.NOT_FOUND
-        );
     }
 
     @PostMapping("/users")
@@ -74,36 +66,22 @@ public class UserRestController {
     @PutMapping("/users")
     public ResponseEntity<User> updateUser(@RequestBody User theUser,
                                                  HttpServletRequest request){
-        if(userService.findByID(theUser.getUserID()) != null){
             userService.save(theUser);
             return new ResponseEntity<>(
                     theUser,
                     headerGenerator.getHeadersForSuccessPostMethod(request, theUser.getUserID()),
                     HttpStatus.ACCEPTED
             );
-        }
-        return new ResponseEntity<>(
-                theUser,
-                headerGenerator.getHeadersForError(),
-                HttpStatus.NOT_FOUND
-        );
     }
 
     @DeleteMapping("/users/{theId}")
     public ResponseEntity<String> deleteUsersById(@PathVariable long theId){
-        if(userService.findByID(theId) != null){
             userService.deleteByID(theId);
             return new ResponseEntity<>(
                     "User deleted!",
                     headerGenerator.getHeadersForSuccessGetMethod(),
                     HttpStatus.ACCEPTED
             );
-        }
-        return new ResponseEntity<>(
-                "User doesn't exist!",
-                headerGenerator.getHeadersForError(),
-                HttpStatus.NOT_FOUND
-        );
     }
 
 }
