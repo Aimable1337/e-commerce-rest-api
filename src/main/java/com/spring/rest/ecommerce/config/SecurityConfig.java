@@ -11,12 +11,17 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
+import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
+
+import javax.sql.DataSource;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    private final DataSource dataSource;
     private final AuthenticationFailureHandler authenticationFailureHandler;
     private final AuthenticationSuccessHandler authenticationSuccessHandler;
     private final ObjectMapper objectMapper;
@@ -26,20 +31,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public SecurityConfig(AuthenticationSuccessHandler authenticationSuccessHandler,
                           AuthenticationFailureHandler authenticationFailureHandler,
                           ObjectMapper objectMapper,
+                          DataSource dataSource,
                           @Value("${jwt.secret}") String secret){
         this.authenticationFailureHandler = authenticationFailureHandler;
         this.authenticationSuccessHandler = authenticationSuccessHandler;
         this.objectMapper = objectMapper;
+        this.dataSource = dataSource;
         this.secret = secret;
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication()
-            .withUser("user")
-            .password("{noop}user")
-            .roles("USER");
-
+        auth.jdbcAuthentication().dataSource(dataSource);
     }
 
     @Override
@@ -55,7 +58,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .addFilter(authenticationFilter())
                 .addFilter(new JwtAuthorizationFilter(authenticationManager(), userDetailsService(), secret))
                 .exceptionHandling()
-                .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED));
+                .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
+                .and()
+                .headers().frameOptions().disable();;
     }
 
     @Bean
@@ -65,5 +70,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         filter.setAuthenticationFailureHandler(authenticationFailureHandler);
         filter.setAuthenticationManager(authenticationManager());
         return filter;
+    }
+
+    @Bean
+    public UserDetailsManager userDetailsManager() {
+        return new JdbcUserDetailsManager(dataSource);
     }
 }
