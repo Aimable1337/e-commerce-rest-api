@@ -34,7 +34,7 @@ public class AuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccess
         String token = JWT.create()
                 .withSubject(principal.getUsername())
                 .withExpiresAt(new Date(System.currentTimeMillis() + expirationTime))
-                .sign(Algorithm.HMAC256(secret));
+                .sign(Algorithm.HMAC512(secret));
        response.addHeader("Authorization", "Bearer " + token);
     }
 }
