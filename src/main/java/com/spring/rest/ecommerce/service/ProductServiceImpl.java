@@ -32,16 +32,20 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void save(Product theProduct) {
-        if(theProduct.getProductID() == 0 || productRepository.findById(theProduct.getProductID()).isPresent())
+        if(theProduct.getProductID() == 0 || productRepository.findById(theProduct.getProductID()).isPresent()){
             productRepository.save(theProduct);
+        }else{
         throw new NotFoundException("Product with id: " + theProduct.getProductID() + " does not exist");
+        }
     }
 
     @Override
     public void deleteByID(long theId) {
-        if (productRepository.findById(theId).isPresent())
+        if (productRepository.findById(theId).isPresent()) {
             productRepository.deleteById(theId);
-        throw new NotFoundException("Product with id: " + theId + " does not exist");
+        } else {
+            throw new NotFoundException("Product with id: " + theId + " does not exist");
+        }
     }
 }
 

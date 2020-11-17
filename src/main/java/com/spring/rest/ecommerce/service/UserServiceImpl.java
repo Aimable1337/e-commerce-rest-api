@@ -27,7 +27,7 @@ public class UserServiceImpl implements UserService{
     public User findByID(long theId) {
         if(userRepository.findById(theId).isPresent())
             return userRepository.findById(theId).get();
-            throw new NotFoundException("User is not found by id: " + theId);
+        throw new NotFoundException("User is not found by id: " + theId);
     }
 
     @Override
