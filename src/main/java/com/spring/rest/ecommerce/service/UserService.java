@@ -1,16 +1,16 @@
 package com.spring.rest.ecommerce.service;
 
-import com.spring.rest.ecommerce.entity.User;
+import com.spring.rest.ecommerce.entity.UserDetails;
 
 import java.util.List;
 
 public interface UserService {
 
-    List<User> findAll();
+    List<UserDetails> findAll();
 
-    User findByID(long theId);
+    UserDetails findByID(long theId);
 
-    void save(User theUser);
+    void save(UserDetails theUser);
 
     void deleteByID(long theId);
 }

@@ -1,6 +1,6 @@
 package com.spring.rest.ecommerce.service;
 
-import com.spring.rest.ecommerce.entity.User;
+import com.spring.rest.ecommerce.entity.UserDetails;
 import com.spring.rest.ecommerce.exception.NotFoundException;
 import com.spring.rest.ecommerce.repository.UserRepository;
 import org.springframework.stereotype.Service;
@@ -17,21 +17,21 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public List<User> findAll() {
+    public List<UserDetails> findAll() {
         if(userRepository.findAll().isEmpty())
             throw new NotFoundException("We have no users :(");
         return userRepository.findAll();
     }
 
     @Override
-    public User findByID(long theId) {
+    public UserDetails findByID(long theId) {
         if(userRepository.findById(theId).isPresent())
             return userRepository.findById(theId).get();
         throw new NotFoundException("User is not found by id: " + theId);
     }
 
     @Override
-    public void save(User theUser) {
+    public void save(UserDetails theUser) {
         if(theUser.getUserID() == 0 || userRepository.findById(theUser.getUserID()).isPresent()){
             userRepository.save(theUser);
         } else {

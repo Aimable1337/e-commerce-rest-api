@@ -1,6 +1,6 @@
 package com.spring.rest.ecommerce.RestController;
 
-import com.spring.rest.ecommerce.entity.User;
+import com.spring.rest.ecommerce.entity.UserDetails;
 import com.spring.rest.ecommerce.headers.HeaderGenerator;
 import com.spring.rest.ecommerce.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +26,8 @@ public class UserRestController {
     }
 
     @GetMapping("/users")
-    public ResponseEntity<List<User>> getUsers(){
-        List<User> users = userService.findAll();
+    public ResponseEntity<List<UserDetails>> getUsers(){
+        List<UserDetails> users = userService.findAll();
             return new ResponseEntity<>(
                     users,
                     headerGenerator.getHeadersForSuccessGetMethod(),
@@ -36,7 +36,7 @@ public class UserRestController {
     }
 
     @GetMapping("/users/{theId}")
-    public ResponseEntity<User> getUserById(@PathVariable long theId){
+    public ResponseEntity<UserDetails> getUserById(@PathVariable long theId){
             return new ResponseEntity<>(
                     userService.findByID(theId),
                     headerGenerator.getHeadersForSuccessGetMethod(),
@@ -45,8 +45,8 @@ public class UserRestController {
     }
 
     @PostMapping("/users")
-    public ResponseEntity<User> createUser(@RequestBody User theUser,
-                                                 HttpServletRequest request){
+    public ResponseEntity<UserDetails> createUser(@RequestBody UserDetails theUser,
+                                                  HttpServletRequest request){
         theUser.setUserID(0);
         userService.save(theUser);
         return new ResponseEntity<>(
@@ -57,8 +57,8 @@ public class UserRestController {
     }
 
     @PutMapping("/users")
-    public ResponseEntity<User> updateUser(@RequestBody User theUser,
-                                                 HttpServletRequest request){
+    public ResponseEntity<UserDetails> updateUser(@RequestBody UserDetails theUser,
+                                                  HttpServletRequest request){
             userService.save(theUser);
             return new ResponseEntity<>(
                     theUser,

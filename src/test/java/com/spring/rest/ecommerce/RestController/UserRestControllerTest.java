@@ -1,8 +1,7 @@
 package com.spring.rest.ecommerce.RestController;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.spring.rest.ecommerce.entity.User;
-import com.spring.rest.ecommerce.entity.User;
+import com.spring.rest.ecommerce.entity.UserDetails;
 import com.spring.rest.ecommerce.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,11 +62,10 @@ class UserRestControllerTest {
     @Transactional
     void ShouldGetSingleUser() throws Exception{
         // given
-        User testUser = new User();
+        UserDetails testUser = new UserDetails();
         testUser.setFirstName("test");
         testUser.setLastName("test");
         testUser.setEmail("test@test.pl");
-        testUser.setUserName("test");
         userRepository.save(testUser);
         // when
         MvcResult mvcResult = mockMvc.perform(get("/user-api/users/" + testUser.getUserID()))
@@ -75,13 +73,12 @@ class UserRestControllerTest {
                 .andExpect(status().is(200))
                 .andReturn();
         // then
-        User user = objectMapper.readValue(mvcResult.getResponse().getContentAsString(), User.class);
+        UserDetails user = objectMapper.readValue(mvcResult.getResponse().getContentAsString(), UserDetails.class);
         assertThat(user).isNotNull();
         assertThat(user.getUserID()).isEqualTo(testUser.getUserID());
         assertThat(user.getFirstName()).isEqualTo(testUser.getFirstName());
         assertThat(user.getLastName()).isEqualTo(testUser.getLastName());
         assertThat(user.getEmail()).isEqualTo(testUser.getEmail());
-        assertThat(user.getUserName()).isEqualTo(testUser.getUserName());
     }
 
     @Test
@@ -102,11 +99,10 @@ class UserRestControllerTest {
     @Transactional
     void ShouldCreateUser() throws Exception{
         // given
-        User testUser = new User();
+        UserDetails testUser = new UserDetails();
         testUser.setFirstName("test");
         testUser.setLastName("test");
         testUser.setEmail("test@test.pl");
-        testUser.setUserName("test");
         // when
         MvcResult mvcResult = mockMvc.perform(post("/user-api/users")
                 .content(objectMapper.writeValueAsString(testUser))
@@ -115,9 +111,8 @@ class UserRestControllerTest {
                 .andExpect(status().is(HttpStatus.CREATED.value()))
                 .andReturn();
         // then
-        User user = objectMapper.readValue(mvcResult.getResponse().getContentAsString(), User.class);
+        UserDetails user = objectMapper.readValue(mvcResult.getResponse().getContentAsString(), UserDetails.class);
         assertThat(user).isNotNull();
-        assertThat(user.getUserName()).isEqualTo(testUser.getUserName());
         assertThat(user.getFirstName()).isEqualTo(testUser.getFirstName());
         assertThat(user.getLastName()).isEqualTo(testUser.getLastName());
         assertThat(user.getEmail()).isEqualTo(testUser.getEmail());
@@ -127,16 +122,14 @@ class UserRestControllerTest {
     @Transactional
     void ShouldUpdateUser() throws Exception{
         // given
-        User testUser = new User();
+        UserDetails testUser = new UserDetails();
         testUser.setFirstName("test");
         testUser.setLastName("test");
         testUser.setEmail("test@test.pl");
-        testUser.setUserName("test");
         userRepository.save(testUser);
         testUser.setFirstName("change");
         testUser.setLastName("change");
         testUser.setEmail("change@test.pl");
-        testUser.setUserName("change");
         // when
         MvcResult mvcResult = mockMvc.perform(put("/user-api/users")
                 .content(objectMapper.writeValueAsString(testUser))
@@ -145,10 +138,9 @@ class UserRestControllerTest {
                 .andExpect(status().is(HttpStatus.ACCEPTED.value()))
                 .andReturn();
         // then
-        User user = objectMapper.readValue(mvcResult.getResponse().getContentAsString(), User.class);
+        UserDetails user = objectMapper.readValue(mvcResult.getResponse().getContentAsString(), UserDetails.class);
         assertThat(user).isNotNull();
         assertThat(user.getUserID()).isEqualTo(testUser.getUserID());
-        assertThat(user.getUserName()).isEqualTo(testUser.getUserName());
         assertThat(user.getFirstName()).isEqualTo(testUser.getFirstName());
         assertThat(user.getLastName()).isEqualTo(testUser.getLastName());
         assertThat(user.getEmail()).isEqualTo(testUser.getEmail());
@@ -158,11 +150,10 @@ class UserRestControllerTest {
     @Transactional
     void ShouldDeleteUserById() throws Exception{
         // given
-        User testUser = new User();
+        UserDetails testUser = new UserDetails();
         testUser.setFirstName("test");
         testUser.setLastName("test");
         testUser.setEmail("test@test.pl");
-        testUser.setUserName("test");
         userRepository.save(testUser);
         // when
         mockMvc.perform(delete("/user-api/users/" + testUser.getUserID()))
