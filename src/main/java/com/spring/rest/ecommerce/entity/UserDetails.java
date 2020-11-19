@@ -3,12 +3,12 @@ package com.spring.rest.ecommerce.entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "user_detail")
+@Table(name = "user_details")
 public class UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id")
+    @Column(name = "id")
     private long userID;
 
     @Column(name = "first_name")
@@ -19,6 +19,18 @@ public class UserDetails {
 
     @Column(name = "email")
     private String email;
+
+    @Column(name = "address")
+    private String address;
+
+    @Column(name = "zip_code")
+    private String zipCode;
+
+    @Column(name = "city")
+    private String city;
+
+    @Column(name = "phone_number")
+    private String phoneNumber;
 
     public long getUserID() {
         return userID;
@@ -52,13 +64,49 @@ public class UserDetails {
         this.email = email;
     }
 
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getZipCode() {
+        return zipCode;
+    }
+
+    public void setZipCode(String zipCode) {
+        this.zipCode = zipCode;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
     @Override
     public String toString() {
-        return "User{" +
+        return "UserDetails{" +
                 "userID=" + userID +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
+                ", address='" + address + '\'' +
+                ", zipCode='" + zipCode + '\'' +
+                ", city='" + city + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
                 '}';
     }
 }
