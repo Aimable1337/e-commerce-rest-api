@@ -17,7 +17,6 @@ public class User {
     private String userName;
 
     @Column(name = "password")
-    @JsonIgnore
     private String password;
 
     @Column(name = "enabled")

@@ -43,18 +43,6 @@ public class UserDetailsRestController {
             );
     }
 
-    @PostMapping("/user-details")
-    public ResponseEntity<UserDetail> createUserDetails(@RequestBody UserDetail theUser,
-                                                        HttpServletRequest request){
-        theUser.setUserID(0);
-        userDetailsService.save(theUser);
-        return new ResponseEntity<>(
-                theUser,
-                headerGenerator.getHeadersForSuccessPostMethod(request, theUser.getUserID()),
-                HttpStatus.CREATED
-        );
-    }
-
     @PutMapping("/user-details")
     public ResponseEntity<UserDetail> updateUserDetails(@RequestBody UserDetail theUser,
                                                         HttpServletRequest request){
@@ -66,13 +54,4 @@ public class UserDetailsRestController {
             );
     }
 
-    @DeleteMapping("/user-details/{theId}")
-    public ResponseEntity<String> deleteUserDetailsById(@PathVariable long theId){
-            userDetailsService.deleteByID(theId);
-            return new ResponseEntity<>(
-                    "User deleted!",
-                    headerGenerator.getHeadersForSuccessGetMethod(),
-                    HttpStatus.ACCEPTED
-            );
-    }
 }

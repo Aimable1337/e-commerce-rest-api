@@ -33,7 +33,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public void save(User theUser) {
         if(theUser.getUserId() == 0 || userRepository.findById(theUser.getUserId()).isPresent()){
-
             userRepository.save(theUser);
         } else {
             throw new NotFoundException("User details with id: " + theUser.getUserId() + " does not exist");

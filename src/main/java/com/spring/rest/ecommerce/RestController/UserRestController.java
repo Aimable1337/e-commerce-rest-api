@@ -1,7 +1,6 @@
 package com.spring.rest.ecommerce.RestController;
 
 import com.spring.rest.ecommerce.entity.User;
-import com.spring.rest.ecommerce.entity.UserAuthority;
 import com.spring.rest.ecommerce.headers.HeaderGenerator;
 import com.spring.rest.ecommerce.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,10 +46,8 @@ public class UserRestController {
     @PostMapping("/users")
     public ResponseEntity<User> createUser(
             @RequestBody User theUser,
-            @RequestBody UserAuthority theAuthority,
             HttpServletRequest request
             ){
-        theUser.setUserAuthority(theAuthority);
         theUser.setUserId(0);
         userService.save(theUser);
         return new ResponseEntity<>(
@@ -72,6 +69,7 @@ public class UserRestController {
 
     @DeleteMapping("/users/{theId}")
     public ResponseEntity<String> deleteUserById(@PathVariable long theId){
+        userService.deleteByID(theId);
         return new ResponseEntity<>(
                 "User with id " + theId + " deleted.",
                 headerGenerator.getHeadersForSuccessGetMethod(),
