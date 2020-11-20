@@ -7,7 +7,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "orders")
-public class Orders {
+public class Order {
 
     @Id
     @Column(name = "id")
@@ -20,7 +20,7 @@ public class Orders {
     @OneToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE,
             CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "order_user_id")
-    private Users userId;
+    private User userId;
 
     @ManyToMany(fetch = FetchType.LAZY,
             cascade = {CascadeType.DETACH, CascadeType.MERGE,
@@ -40,11 +40,11 @@ public class Orders {
         this.orderId = orderId;
     }
 
-    public Users getUserId() {
+    public User getUserId() {
         return userId;
     }
 
-    public void setUserId(Users userId) {
+    public void setUserId(User userId) {
         this.userId = userId;
     }
 

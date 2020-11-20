@@ -1,10 +1,12 @@
 package com.spring.rest.ecommerce.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "users")
-public class Users {
+public class User {
 
     @Id
     @Column(name = "id")
@@ -15,6 +17,7 @@ public class Users {
     private String userName;
 
     @Column(name = "password")
+    @JsonIgnore
     private String password;
 
     @Column(name = "enabled")
@@ -22,7 +25,7 @@ public class Users {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_details_id")
-    private UserDetails userDetails;
+    private UserDetail userDetails;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_authority_id")
@@ -58,5 +61,21 @@ public class Users {
 
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
+    }
+
+    public UserDetail getUserDetails() {
+        return userDetails;
+    }
+
+    public void setUserDetails(UserDetail userDetails) {
+        this.userDetails = userDetails;
+    }
+
+    public UserAuthority getUserAuthority() {
+        return userAuthority;
+    }
+
+    public void setUserAuthority(UserAuthority userAuthority) {
+        this.userAuthority = userAuthority;
     }
 }

@@ -1,8 +1,8 @@
 package com.spring.rest.ecommerce.RestController;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.spring.rest.ecommerce.entity.UserDetails;
-import com.spring.rest.ecommerce.repository.UserRepository;
+import com.spring.rest.ecommerce.entity.UserDetail;
+import com.spring.rest.ecommerce.repository.UserDetailsRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -33,7 +33,7 @@ class UserRestControllerTest {
     private MockMvc mockMvc;
 
     @Autowired
-    private UserRepository userRepository;
+    private UserDetailsRepository userRepository;
 
     @Autowired
     private ObjectMapper objectMapper;
@@ -62,7 +62,7 @@ class UserRestControllerTest {
     @Transactional
     void ShouldGetSingleUser() throws Exception{
         // given
-        UserDetails testUser = new UserDetails();
+        UserDetail testUser = new UserDetail();
         testUser.setFirstName("test");
         testUser.setLastName("test");
         testUser.setEmail("test@test.pl");
@@ -73,7 +73,7 @@ class UserRestControllerTest {
                 .andExpect(status().is(200))
                 .andReturn();
         // then
-        UserDetails user = objectMapper.readValue(mvcResult.getResponse().getContentAsString(), UserDetails.class);
+        UserDetail user = objectMapper.readValue(mvcResult.getResponse().getContentAsString(), UserDetail.class);
         assertThat(user).isNotNull();
         assertThat(user.getUserID()).isEqualTo(testUser.getUserID());
         assertThat(user.getFirstName()).isEqualTo(testUser.getFirstName());
@@ -99,7 +99,7 @@ class UserRestControllerTest {
     @Transactional
     void ShouldCreateUser() throws Exception{
         // given
-        UserDetails testUser = new UserDetails();
+        UserDetail testUser = new UserDetail();
         testUser.setFirstName("test");
         testUser.setLastName("test");
         testUser.setEmail("test@test.pl");
@@ -111,7 +111,7 @@ class UserRestControllerTest {
                 .andExpect(status().is(HttpStatus.CREATED.value()))
                 .andReturn();
         // then
-        UserDetails user = objectMapper.readValue(mvcResult.getResponse().getContentAsString(), UserDetails.class);
+        UserDetail user = objectMapper.readValue(mvcResult.getResponse().getContentAsString(), UserDetail.class);
         assertThat(user).isNotNull();
         assertThat(user.getFirstName()).isEqualTo(testUser.getFirstName());
         assertThat(user.getLastName()).isEqualTo(testUser.getLastName());
@@ -122,7 +122,7 @@ class UserRestControllerTest {
     @Transactional
     void ShouldUpdateUser() throws Exception{
         // given
-        UserDetails testUser = new UserDetails();
+        UserDetail testUser = new UserDetail();
         testUser.setFirstName("test");
         testUser.setLastName("test");
         testUser.setEmail("test@test.pl");
@@ -138,7 +138,7 @@ class UserRestControllerTest {
                 .andExpect(status().is(HttpStatus.ACCEPTED.value()))
                 .andReturn();
         // then
-        UserDetails user = objectMapper.readValue(mvcResult.getResponse().getContentAsString(), UserDetails.class);
+        UserDetail user = objectMapper.readValue(mvcResult.getResponse().getContentAsString(), UserDetail.class);
         assertThat(user).isNotNull();
         assertThat(user.getUserID()).isEqualTo(testUser.getUserID());
         assertThat(user.getFirstName()).isEqualTo(testUser.getFirstName());
@@ -150,7 +150,7 @@ class UserRestControllerTest {
     @Transactional
     void ShouldDeleteUserById() throws Exception{
         // given
-        UserDetails testUser = new UserDetails();
+        UserDetail testUser = new UserDetail();
         testUser.setFirstName("test");
         testUser.setLastName("test");
         testUser.setEmail("test@test.pl");

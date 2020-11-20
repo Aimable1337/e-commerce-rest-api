@@ -1,6 +1,7 @@
 package com.spring.rest.ecommerce.RestController;
 
-import com.spring.rest.ecommerce.entity.UserDetails;
+import com.spring.rest.ecommerce.entity.User;
+import com.spring.rest.ecommerce.entity.UserAuthority;
 import com.spring.rest.ecommerce.headers.HeaderGenerator;
 import com.spring.rest.ecommerce.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,55 +27,55 @@ public class UserRestController {
     }
 
     @GetMapping("/users")
-    public ResponseEntity<List<UserDetails>> getUsers(){
-        List<UserDetails> users = userService.findAll();
-            return new ResponseEntity<>(
-                    users,
-                    headerGenerator.getHeadersForSuccessGetMethod(),
-                    HttpStatus.OK
-            );
+    public ResponseEntity<List<User>> getUsers(){
+        return new ResponseEntity<>(
+                userService.findAll(),
+                headerGenerator.getHeadersForSuccessGetMethod(),
+                HttpStatus.OK
+        );
     }
 
     @GetMapping("/users/{theId}")
-    public ResponseEntity<UserDetails> getUserById(@PathVariable long theId){
-            return new ResponseEntity<>(
-                    userService.findByID(theId),
-                    headerGenerator.getHeadersForSuccessGetMethod(),
-                    HttpStatus.OK
-            );
+    public ResponseEntity<User> getUserById(@PathVariable long theId){
+        return new ResponseEntity<>(
+                userService.findByID(theId),
+                headerGenerator.getHeadersForSuccessGetMethod(),
+                HttpStatus.OK
+        );
     }
 
     @PostMapping("/users")
-    public ResponseEntity<UserDetails> createUser(@RequestBody UserDetails theUser,
-                                                  HttpServletRequest request){
-        theUser.setUserID(0);
+    public ResponseEntity<User> createUser(
+            @RequestBody User theUser,
+            @RequestBody UserAuthority theAuthority,
+            HttpServletRequest request
+            ){
+        theUser.setUserAuthority(theAuthority);
+        theUser.setUserId(0);
         userService.save(theUser);
         return new ResponseEntity<>(
                 theUser,
-                headerGenerator.getHeadersForSuccessPostMethod(request, theUser.getUserID()),
+                headerGenerator.getHeadersForSuccessPostMethod(request, theUser.getUserId()),
                 HttpStatus.CREATED
         );
     }
 
     @PutMapping("/users")
-    public ResponseEntity<UserDetails> updateUser(@RequestBody UserDetails theUser,
-                                                  HttpServletRequest request){
-            userService.save(theUser);
-            return new ResponseEntity<>(
-                    theUser,
-                    headerGenerator.getHeadersForSuccessPostMethod(request, theUser.getUserID()),
-                    HttpStatus.ACCEPTED
-            );
+    public ResponseEntity<User> updateUser(@RequestBody User theUser, HttpServletRequest request){
+        userService.save(theUser);
+        return new ResponseEntity<>(
+                theUser,
+                headerGenerator.getHeadersForSuccessPostMethod(request, theUser.getUserId()),
+                HttpStatus.ACCEPTED
+        );
     }
 
     @DeleteMapping("/users/{theId}")
-    public ResponseEntity<String> deleteUsersById(@PathVariable long theId){
-            userService.deleteByID(theId);
-            return new ResponseEntity<>(
-                    "User deleted!",
-                    headerGenerator.getHeadersForSuccessGetMethod(),
-                    HttpStatus.ACCEPTED
-            );
+    public ResponseEntity<String> deleteUserById(@PathVariable long theId){
+        return new ResponseEntity<>(
+                "User with id " + theId + " deleted.",
+                headerGenerator.getHeadersForSuccessGetMethod(),
+                HttpStatus.ACCEPTED
+        );
     }
-
 }
