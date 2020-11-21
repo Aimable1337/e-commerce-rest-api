@@ -1,7 +1,5 @@
 package com.spring.rest.ecommerce.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 
 @Entity

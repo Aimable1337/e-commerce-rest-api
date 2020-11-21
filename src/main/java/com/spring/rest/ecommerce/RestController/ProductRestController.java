@@ -8,11 +8,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
-@RequestMapping("/product-api")
 public class ProductRestController {
 
     private final ProductService productService;
@@ -42,39 +40,6 @@ public class ProductRestController {
                     productService.findByID(theId),
                     headerGenerator.getHeadersForSuccessGetMethod(),
                     HttpStatus.OK
-            );
-    }
-
-    @PostMapping("/products")
-    public ResponseEntity<Product> createProduct(@RequestBody Product theProduct,
-                                                 HttpServletRequest request){
-        theProduct.setProductID(0);
-        productService.save(theProduct);
-        return new ResponseEntity<>(
-                theProduct,
-                headerGenerator.getHeadersForSuccessPostMethod(request, theProduct.getProductID()),
-                HttpStatus.CREATED
-        );
-    }
-
-    @PutMapping("/products")
-    public ResponseEntity<Product> updateProduct(@RequestBody Product theProduct,
-                                                 HttpServletRequest request){
-            productService.save(theProduct);
-            return new ResponseEntity<>(
-                    theProduct,
-                    headerGenerator.getHeadersForSuccessPostMethod(request, theProduct.getProductID()),
-                    HttpStatus.ACCEPTED
-            );
-    }
-
-    @DeleteMapping("/products/{theId}")
-    public ResponseEntity<String> deleteProductById(@PathVariable long theId){
-            productService.deleteByID(theId);
-            return new ResponseEntity<>(
-                    "Product deleted!",
-                    headerGenerator.getHeadersForSuccessGetMethod(),
-                    HttpStatus.ACCEPTED
             );
     }
 
