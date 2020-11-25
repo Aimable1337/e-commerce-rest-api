@@ -1,10 +1,15 @@
 package com.spring.rest.ecommerce.service;
 
 import com.spring.rest.ecommerce.entity.Order;
+import com.spring.rest.ecommerce.entity.Product;
 import com.spring.rest.ecommerce.exception.NotFoundException;
 import com.spring.rest.ecommerce.repository.OrderRepository;
+import com.spring.rest.ecommerce.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -12,8 +17,12 @@ public class OrderServiceImpl implements OrderService {
 
     private final OrderRepository orderRepository;
 
-    public OrderServiceImpl(OrderRepository orderRepository){
+    private final UserRepository userRepository;
+
+    @Autowired
+    public OrderServiceImpl(OrderRepository orderRepository, UserRepository userRepository){
         this.orderRepository = orderRepository;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -46,5 +55,12 @@ public class OrderServiceImpl implements OrderService {
         } else {
             throw new NotFoundException("Order with id: " + theId + " does not exist");
         }
+    }
+
+    @Override
+    public long createOrder(List<Product> products, HttpServletRequest request) {
+        Order order = new Order(0, LocalDate.now(), userRepository.findByUserName(request.getRemoteUser()), products);
+        orderRepository.save(order);
+        return order.getOrderId();
     }
 }

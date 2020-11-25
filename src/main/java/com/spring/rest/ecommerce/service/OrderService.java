@@ -1,7 +1,9 @@
 package com.spring.rest.ecommerce.service;
 
 import com.spring.rest.ecommerce.entity.Order;
+import com.spring.rest.ecommerce.entity.Product;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 public interface OrderService {
@@ -14,4 +16,5 @@ public interface OrderService {
 
     void deleteById(long theId);
 
+    long createOrder(List<Product> products, HttpServletRequest request);
 }

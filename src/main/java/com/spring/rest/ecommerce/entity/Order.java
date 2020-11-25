@@ -1,8 +1,8 @@
 package com.spring.rest.ecommerce.entity;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -15,7 +15,7 @@ public class Order {
     private long orderId;
 
     @Column(name = "order_date")
-    private Date orderDate;
+    private LocalDate orderDate;
 
     @OneToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE,
             CascadeType.PERSIST, CascadeType.REFRESH})
@@ -31,6 +31,16 @@ public class Order {
             inverseJoinColumns = @JoinColumn(name = "product_id")
     )
     private List<Product> orderList;
+
+    public Order(long orderId, LocalDate orderDate, User userId, List<Product> orderList) {
+        this.orderId = orderId;
+        this.orderDate = orderDate;
+        this.userId = userId;
+        this.orderList = orderList;
+    }
+
+    public Order() {
+    }
 
     public long getOrderId() {
         return orderId;
@@ -56,11 +66,11 @@ public class Order {
         this.orderList = orderList;
     }
 
-    public Date getOrderDate() {
+    public LocalDate getOrderDate() {
         return orderDate;
     }
 
-    public void setOrderDate(Date orderDate) {
+    public void setOrderDate(LocalDate orderDate) {
         this.orderDate = orderDate;
     }
 
