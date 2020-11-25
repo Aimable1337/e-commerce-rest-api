@@ -2,6 +2,8 @@ package com.spring.rest.ecommerce.RestController;
 
 import com.spring.rest.ecommerce.entity.Product;
 import com.spring.rest.ecommerce.headers.HeaderGenerator;
+import com.spring.rest.ecommerce.response.ResponseMessage;
+import com.spring.rest.ecommerce.response.ResponseMessageGenerator;
 import com.spring.rest.ecommerce.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,11 +20,15 @@ public class EmployeeProductPanelRestController { //TODO: refactor class to fit 
 
     private final HeaderGenerator headerGenerator;
 
+    private final ResponseMessageGenerator responseMessageGenerator;
+
     @Autowired
     public EmployeeProductPanelRestController(ProductService theProductService,
-                                 HeaderGenerator theHeaderGenerator){
-        headerGenerator = theHeaderGenerator;
-        productService = theProductService;
+                                              HeaderGenerator theHeaderGenerator,
+                                              ResponseMessageGenerator responseMessageGenerator){
+        this.headerGenerator = theHeaderGenerator;
+        this.productService = theProductService;
+        this.responseMessageGenerator = responseMessageGenerator;
     }
 
     @PostMapping("/products")
@@ -49,10 +55,10 @@ public class EmployeeProductPanelRestController { //TODO: refactor class to fit 
     }
 
     @DeleteMapping("/products/{theId}")
-    public ResponseEntity<String> deleteProductById(@PathVariable long theId){
+    public ResponseEntity<ResponseMessage> deleteProductById(@PathVariable long theId){
         productService.deleteByID(theId);
         return new ResponseEntity<>(
-                "Product deleted!",
+                responseMessageGenerator.getResponseForSuccessDeleteMethod(theId),
                 headerGenerator.getHeadersForSuccessGetMethod(),
                 HttpStatus.ACCEPTED
         );

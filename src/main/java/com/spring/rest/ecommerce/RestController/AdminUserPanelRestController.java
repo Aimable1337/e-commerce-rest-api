@@ -3,6 +3,8 @@ package com.spring.rest.ecommerce.RestController;
 import com.spring.rest.ecommerce.entity.User;
 import com.spring.rest.ecommerce.entity.UserAuthority;
 import com.spring.rest.ecommerce.headers.HeaderGenerator;
+import com.spring.rest.ecommerce.response.ResponseMessage;
+import com.spring.rest.ecommerce.response.ResponseMessageGenerator;
 import com.spring.rest.ecommerce.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,14 +18,18 @@ import java.util.List;
 @RequestMapping("/admin/user-panel")
 public class AdminUserPanelRestController {
 
-    private UserService userService;
+    private final UserService userService;
 
-    private HeaderGenerator headerGenerator;
+    private final HeaderGenerator headerGenerator;
+
+    private final ResponseMessageGenerator responseMessageGenerator;
 
     @Autowired
     public AdminUserPanelRestController(UserService userService,
-                                        HeaderGenerator headerGenerator) {
+                                        HeaderGenerator headerGenerator,
+                                        ResponseMessageGenerator responseMessageGenerator) {
         this.userService = userService;
+        this.responseMessageGenerator = responseMessageGenerator;
         this.headerGenerator = headerGenerator;
     }
 
@@ -46,7 +52,7 @@ public class AdminUserPanelRestController {
     }
 
     @PostMapping("/users")
-    public ResponseEntity<User> createUser(@RequestBody User user, HttpServletRequest request) throws Exception {
+    public ResponseEntity<User> createUser(@RequestBody User user, HttpServletRequest request) {
         user.setUserId(0);
         userService.save(user);
         return new ResponseEntity<>(
@@ -67,36 +73,36 @@ public class AdminUserPanelRestController {
     }
 
     @PutMapping("/change-authority/{theId}")
-    public ResponseEntity<String> changeAuthorities(@PathVariable long theId,
-                                                    @RequestBody UserAuthority newAuthority,
-                                                    HttpServletRequest request) {
+    public ResponseEntity<ResponseMessage> changeAuthorities(@PathVariable long theId,
+                                                             @RequestBody UserAuthority newAuthority,
+                                                             HttpServletRequest request) {
         User user = userService.findByID(theId);
         user.setUserAuthority(newAuthority);
         userService.save(user);
         return new ResponseEntity<>(
-                "Authority changed successfully!",
+                responseMessageGenerator.getResponseForSuccessPutMethod(theId),
                 headerGenerator.getHeadersForSuccessPostMethod(request, user.getUserId()),
                 HttpStatus.ACCEPTED
         );
     }
 
     @PutMapping("/ban-user/{theId}")
-    public ResponseEntity<String> banUser(@PathVariable long theId, HttpServletRequest request) throws Exception {
+    public ResponseEntity<ResponseMessage> banUser(@PathVariable long theId, HttpServletRequest request) {
         User user = userService.findByID(theId);
         user.setEnabled(false);
         userService.save(user);
         return new ResponseEntity<>(
-                "User banned successfully!",
+                responseMessageGenerator.getResponseForSuccessBanMethod(theId),
                 headerGenerator.getHeadersForSuccessPostMethod(request, user.getUserId()),
                 HttpStatus.ACCEPTED
         );
     }
 
     @DeleteMapping("/users/{theId}")
-    public ResponseEntity<String> deleteUser(@PathVariable long theId) {
+    public ResponseEntity<ResponseMessage> deleteUser(@PathVariable long theId) {
         userService.deleteByID(theId);
         return new ResponseEntity<>(
-                "User deleted successfully!",
+                responseMessageGenerator.getResponseForSuccessDeleteMethod(theId),
                 headerGenerator.getHeadersForSuccessGetMethod(),
                 HttpStatus.ACCEPTED
         );

@@ -1,27 +1,14 @@
-package com.spring.rest.ecommerce.exception;
+package com.spring.rest.ecommerce.response;
 
-public class ExceptionResponse {
-
-    private int status;
+public class ResponseMessage {
 
     private String message;
 
     private long timeStamp;
 
-    public ExceptionResponse(){}
-
-    public ExceptionResponse(int status, String message, long timeStamp) {
-        this.status = status;
+    public ResponseMessage(String message, long timeStamp) {
         this.message = message;
         this.timeStamp = timeStamp;
-    }
-
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
     }
 
     public String getMessage() {

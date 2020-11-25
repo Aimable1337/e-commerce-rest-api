@@ -2,6 +2,8 @@ package com.spring.rest.ecommerce.RestController;
 
 import com.spring.rest.ecommerce.entity.Order;
 import com.spring.rest.ecommerce.headers.HeaderGenerator;
+import com.spring.rest.ecommerce.response.ResponseMessage;
+import com.spring.rest.ecommerce.response.ResponseMessageGenerator;
 import com.spring.rest.ecommerce.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,16 +15,20 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/employee/order-panel")
-public class EmployeeOrderPanelRestController { //TODO: implement methods
+public class EmployeeOrderPanelRestController {
 
     private final OrderService orderService;
 
     private final HeaderGenerator headerGenerator;
 
+    private final ResponseMessageGenerator responseMessageGenerator;
+
     @Autowired
     public EmployeeOrderPanelRestController(OrderService orderService,
+                                            ResponseMessageGenerator responseMessageGenerator,
                                             HeaderGenerator headerGenerator) {
         this.orderService = orderService;
+        this.responseMessageGenerator = responseMessageGenerator;
         this.headerGenerator = headerGenerator;
     }
 
@@ -56,10 +62,10 @@ public class EmployeeOrderPanelRestController { //TODO: implement methods
     }
 
     @PutMapping("/orders")
-    public ResponseEntity<String> updateOrder(@RequestBody Order theOrder) {
+    public ResponseEntity<ResponseMessage> updateOrder(@RequestBody Order theOrder) {
         orderService.save(theOrder);
         return new ResponseEntity<>(
-                "Order updated successfully!",
+                responseMessageGenerator.getResponseForSuccessPutMethod(theOrder.getOrderId()),
                 headerGenerator.getHeadersForSuccessGetMethod(),
                 HttpStatus.ACCEPTED
         );
@@ -71,10 +77,10 @@ public class EmployeeOrderPanelRestController { //TODO: implement methods
     }
 
     @DeleteMapping("/orders/{theId}")
-    public ResponseEntity<String> deleteOrder(@PathVariable long theId) throws Exception {
+    public ResponseEntity<ResponseMessage> deleteOrder(@PathVariable long theId) throws Exception {
         orderService.deleteById(theId);
         return new ResponseEntity<>(
-                "Order deleted!",
+                responseMessageGenerator.getResponseForSuccessDeleteMethod(theId),
                 headerGenerator.getHeadersForSuccessGetMethod(),
                 HttpStatus.ACCEPTED
         );
