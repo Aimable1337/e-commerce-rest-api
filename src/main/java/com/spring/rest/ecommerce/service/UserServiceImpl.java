@@ -104,4 +104,11 @@ public class UserServiceImpl implements UserService {
       user.setUserDetails(newUserDetails);
       userRepository.save(user);
     }
+
+    @Override
+    public void banUserById(long theId) {
+        User user = findByID(theId);
+        user.setEnabled(false);
+        userRepository.save(user);
+    }
 }

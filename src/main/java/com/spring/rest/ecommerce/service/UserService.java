@@ -27,4 +27,6 @@ public interface UserService {
     boolean checkIfOldPasswordIsValid(String oldPassword);
 
     void changeMyDetails(UserDetail newUserDetails);
+
+    void banUserById(long theId);
 }

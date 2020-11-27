@@ -42,7 +42,7 @@ public class EmployeeOrderPanelRestController {
     }
 
     @GetMapping("/orders/{theId}")
-    public ResponseEntity<Order> getOrderBuId(@PathVariable long theId) {
+    public ResponseEntity<Order> getOrderById(@PathVariable long theId) {
         return new ResponseEntity<>(
                 orderService.findOrderById(theId),
                 headerGenerator.getHeadersForSuccessGetMethod(),
