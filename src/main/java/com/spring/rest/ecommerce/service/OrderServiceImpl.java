@@ -33,6 +33,13 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public List<Order> findAllOrdersByUserId(long userId) {
+        if (orderRepository.findAllOrdersByUserId(userId).isEmpty())
+            throw new NotFoundException("You have no orders");
+        return orderRepository.findAllOrdersByUserId(userId);
+    }
+
+    @Override
     public Order findOrderById(long theId) {
         if(orderRepository.findById(theId).isPresent())
             return orderRepository.findById(theId).get();

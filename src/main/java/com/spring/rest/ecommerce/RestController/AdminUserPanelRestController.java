@@ -42,10 +42,19 @@ public class AdminUserPanelRestController {
         );
     }
 
-    @GetMapping("/users/{theId}")
-    public ResponseEntity<User> getSingleUser(@PathVariable long theId) {
+    @GetMapping("/users/id={theId}")
+    public ResponseEntity<User> getUserById(@PathVariable long theId) {
         return new ResponseEntity<>(
                 userService.findByID(theId),
+                headerGenerator.getHeadersForSuccessGetMethod(),
+                HttpStatus.OK
+        );
+    }
+
+    @GetMapping("/users/name={userName}")
+    public ResponseEntity<User> getUserByUserName(@PathVariable String userName) {
+        return new ResponseEntity<>(
+                userService.findByUserName(userName),
                 headerGenerator.getHeadersForSuccessGetMethod(),
                 HttpStatus.OK
         );

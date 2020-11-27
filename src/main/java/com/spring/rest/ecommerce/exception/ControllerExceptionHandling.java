@@ -25,6 +25,34 @@ public class ControllerExceptionHandling {
     }
 
     @ExceptionHandler
+    public ResponseEntity<ExceptionResponse> handleException(UsernameAlreadyExistException exc){
+        ExceptionResponse response = new ExceptionResponse(
+                HttpStatus.BAD_REQUEST.value(),
+                exc.getMessage(),
+                System.currentTimeMillis()
+        );
+
+        return new ResponseEntity<>(
+                response,
+                HttpStatus.BAD_REQUEST
+        );
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<ExceptionResponse> handleException(OldPasswordInvalid exc){
+        ExceptionResponse response = new ExceptionResponse(
+                HttpStatus.BAD_REQUEST.value(),
+                exc.getMessage(),
+                System.currentTimeMillis()
+        );
+
+        return new ResponseEntity<>(
+                response,
+                HttpStatus.BAD_REQUEST
+        );
+    }
+
+    @ExceptionHandler
     public ResponseEntity<ExceptionResponse> handleException(Exception exc){
 
         ExceptionResponse response = new ExceptionResponse(

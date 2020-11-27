@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("/employee")
-public class EmployeeProductPanelRestController { //TODO: refactor class to fit new architecture
+public class EmployeeProductPanelRestController {
 
     private final ProductService productService;
 

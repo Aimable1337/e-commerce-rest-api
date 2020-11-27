@@ -17,9 +17,9 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping("/register")
 public class RegisterRestController {
 
-    private UserService userService;
+    private final UserService userService;
 
-    private HeaderGenerator headerGenerator;
+    private final HeaderGenerator headerGenerator;
 
     @Autowired
     public RegisterRestController(UserService userService, HeaderGenerator headerGenerator){
@@ -28,7 +28,7 @@ public class RegisterRestController {
     }
 
     @PostMapping
-    public ResponseEntity<User> registerUser(@RequestBody User theUser, HttpServletRequest request) throws Exception {
+    public ResponseEntity<User> registerUser(@RequestBody User theUser, HttpServletRequest request) {
         theUser.setUserId(0);
         userService.save(theUser);
         return new ResponseEntity<>(
