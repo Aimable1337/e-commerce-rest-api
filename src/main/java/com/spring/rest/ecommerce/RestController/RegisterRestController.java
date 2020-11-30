@@ -2,6 +2,8 @@ package com.spring.rest.ecommerce.RestController;
 
 import com.spring.rest.ecommerce.entity.User;
 import com.spring.rest.ecommerce.headers.HeaderGenerator;
+import com.spring.rest.ecommerce.response.ResponseMessage;
+import com.spring.rest.ecommerce.response.ResponseMessageGenerator;
 import com.spring.rest.ecommerce.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,19 +23,23 @@ public class RegisterRestController {
 
     private final HeaderGenerator headerGenerator;
 
+    private final ResponseMessageGenerator responseMessageGenerator;
+
     @Autowired
-    public RegisterRestController(UserService userService, HeaderGenerator headerGenerator){
+    public RegisterRestController(UserService userService,
+                                  ResponseMessageGenerator responseMessageGenerator,
+                                  HeaderGenerator headerGenerator){
         this.userService = userService;
+        this.responseMessageGenerator = responseMessageGenerator;
         this.headerGenerator = headerGenerator;
     }
 
     @PostMapping
-    public ResponseEntity<User> registerUser(@RequestBody User theUser, HttpServletRequest request) {
-        theUser.setUserId(0);
-        userService.save(theUser);
+    public ResponseEntity<ResponseMessage> registerUser(@RequestBody User newUser, HttpServletRequest request) {
+        userService.register(newUser);
         return new ResponseEntity<>(
-                theUser,
-                headerGenerator.getHeadersForSuccessPostMethod(request, theUser.getUserId()),
+                responseMessageGenerator.getResponseForSuccessPostMethod(newUser.getUserId()),
+                headerGenerator.getHeadersForSuccessPostMethod(request, newUser.getUserId()),
                 HttpStatus.CREATED
         );
     }

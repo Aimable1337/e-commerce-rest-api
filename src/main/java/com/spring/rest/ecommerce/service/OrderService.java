@@ -14,6 +14,8 @@ public interface OrderService {
 
     List<Order> findAllOrdersByUserId(long userId);
 
+    List<Order> findMyOrders(HttpServletRequest request);
+
     void save(Order theOrder);
 
     void deleteById(long theId);

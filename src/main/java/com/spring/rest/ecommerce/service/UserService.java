@@ -18,6 +18,8 @@ public interface UserService {
 
     void save(User theUser);
 
+    void register(User newUser);
+
     long changeMyUserName(HttpServletRequest request, String newUserName);
 
     void deleteByID(long theId);

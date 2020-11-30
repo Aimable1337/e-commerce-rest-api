@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 
 @RestController
-@RequestMapping("account")
+@RequestMapping("/account")
 public class UserRestController {
 
     private final UserService userService;

@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
-@RequestMapping("/user/orders")
+@RequestMapping("/user")
 public class UserOrdersRestController {
 
     private final OrderService orderService;
@@ -33,10 +33,10 @@ public class UserOrdersRestController {
         this.responseMessageGenerator = responseMessageGenerator;
     }
 
-    @GetMapping
-    public ResponseEntity<List<Order>> getMyOrders() {
+    @GetMapping("/orders")
+    public ResponseEntity<List<Order>> getMyOrders(HttpServletRequest request) {
         return new ResponseEntity<>(
-                orderService.findAll(),
+                orderService.findMyOrders(request),
                 headerGenerator.getHeadersForSuccessGetMethod(),
                 HttpStatus.OK
         );
@@ -51,12 +51,12 @@ public class UserOrdersRestController {
         );
     }
 
-    @GetMapping("/orders-status/{theId}")
+    @GetMapping("/order-status/{theId}") // TODO
     public ResponseEntity<?> getMyOrdersStatus() throws Exception {
         throw new Exception("Not implemented yet!");
     }
 
-    @PostMapping
+    @PostMapping("/orders")
     public ResponseEntity<ResponseMessage> createOrder(@RequestBody List<Product> products, HttpServletRequest request) {
         long newOrderId = orderService.createOrder(products, request);
         return new ResponseEntity<>(

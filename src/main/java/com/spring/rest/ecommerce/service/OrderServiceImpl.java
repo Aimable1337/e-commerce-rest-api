@@ -35,8 +35,18 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<Order> findAllOrdersByUserId(long userId) {
         if (orderRepository.findAllOrdersByUserId(userId).isEmpty())
-            throw new NotFoundException("You have no orders");
+            throw new NotFoundException("User with id " + userId + " has no orders");
         return orderRepository.findAllOrdersByUserId(userId);
+    }
+
+    @Override
+    public List<Order> findMyOrders(HttpServletRequest request){
+        List<Order> myOrders = findAllOrdersByUserId(userRepository.getIdByName(request.getRemoteUser()));
+        if (!myOrders.isEmpty()){
+            return findAllOrdersByUserId(userRepository.getIdByName(request.getRemoteUser()));
+        } else {
+            throw new NotFoundException("You have no orders");
+        }
     }
 
     @Override

@@ -50,11 +50,19 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void save(User theUser) {
-        if(theUser.getUserId() == 0 || userRepository.findById(theUser.getUserId()).isPresent()){
+        if(userRepository.findById(theUser.getUserId()).isPresent()){
             userRepository.save(theUser);
         } else {
             throw new NotFoundException("User details with id: " + theUser.getUserId() + " does not exist");
         }
+    }
+
+    @Override
+    public void register(User newUser){
+        String password ="{bcrypt}" + new BCryptPasswordEncoder().encode(newUser.getPassword());
+        newUser.setPassword(password);
+        newUser.setUserId(0);
+        userRepository.save(newUser);
     }
 
     @Override
