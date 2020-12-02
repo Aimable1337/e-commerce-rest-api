@@ -86,6 +86,7 @@ public class AdminUserPanelRestController {
                                                              @RequestBody UserAuthority newAuthority,
                                                              HttpServletRequest request) {
         User user = userService.findByID(theId);
+        newAuthority.setId(user.getUserAuthority().getId());
         user.setUserAuthority(newAuthority);
         userService.save(user);
         return new ResponseEntity<>(
@@ -96,7 +97,7 @@ public class AdminUserPanelRestController {
     }
 
     @PutMapping("/ban-user/{theId}")
-    public ResponseEntity<ResponseMessage> banUser(@PathVariable long theId, HttpServletRequest request) {
+    public ResponseEntity<ResponseMessage> banUser(@PathVariable long theId) {
         userService.banUserById(theId);
         return new ResponseEntity<>(
                 responseMessageGenerator.getResponseForSuccessBanMethod(theId),
