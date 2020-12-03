@@ -39,7 +39,12 @@ public class Order {
         this.orderList = orderList;
     }
 
-    public Order() {
+    public Order() { }
+
+    public Order(LocalDate orderDate, User userId, List<Product> orderList) {
+        this.orderDate = orderDate;
+        this.userId = userId;
+        this.orderList = orderList;
     }
 
     public long getOrderId() {

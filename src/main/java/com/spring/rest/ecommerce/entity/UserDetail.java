@@ -32,6 +32,18 @@ public class UserDetail {
     @Column(name = "phone_number")
     private String phoneNumber;
 
+    public UserDetail() {}
+
+    public UserDetail(String firstName, String lastName, String email, String address, String zipCode, String city, String phoneNumber) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.address = address;
+        this.zipCode = zipCode;
+        this.city = city;
+        this.phoneNumber = phoneNumber;
+    }
+
     public long getUserID() {
         return userID;
     }

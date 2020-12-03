@@ -20,6 +20,14 @@ public class Product {
     @Column(name = "product_price")
     private int productPrice;
 
+    public Product() {}
+
+    public Product(String productName, String productCategory, int productPrice) {
+        this.productName = productName;
+        this.productCategory = productCategory;
+        this.productPrice = productPrice;
+    }
+
     public long getProductID() {
         return productID;
     }

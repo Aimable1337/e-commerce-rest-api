@@ -28,6 +28,16 @@ public class User {
     @JoinColumn(name = "user_authority_id")
     private UserAuthority userAuthority;
 
+    public User() {}
+
+    public User(String userName, String password, boolean enabled, UserDetail userDetails, UserAuthority userAuthority) {
+        this.userName = userName;
+        this.password = password;
+        this.enabled = enabled;
+        this.userDetails = userDetails;
+        this.userAuthority = userAuthority;
+    }
+
     public long getUserId() {
         return userId;
     }

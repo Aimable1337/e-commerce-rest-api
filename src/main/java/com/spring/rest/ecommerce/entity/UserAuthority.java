@@ -17,6 +17,13 @@ public class UserAuthority {
     @Column(name = "authority")
     private String authority;
 
+    public UserAuthority() {}
+
+    public UserAuthority(String username, String authority) {
+        this.username = username;
+        this.authority = authority;
+    }
+
     public long getId() {
         return id;
     }
