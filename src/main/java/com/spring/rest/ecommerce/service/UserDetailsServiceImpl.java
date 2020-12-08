@@ -25,9 +25,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetail findByID(long theId) {
-        if(userDetailRepository.findById(theId).isPresent())
-            return userDetailRepository.findById(theId).get();
-        throw new NotFoundException("User details are not found by id: " + theId);
+            return userDetailRepository.findById(theId).orElseThrow(
+                    () -> new NotFoundException("User details are not found by id: " + theId)
+            );
     }
 
     @Override
