@@ -7,8 +7,6 @@ import com.spring.rest.ecommerce.entity.UserAuthority;
 import com.spring.rest.ecommerce.entity.UserDetail;
 import com.spring.rest.ecommerce.repository.OrderRepository;
 import com.spring.rest.ecommerce.repository.UserRepository;
-import org.aspectj.lang.annotation.Before;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +47,7 @@ class UserOrdersRestControllerTest {
     private User testUser;
 
     @BeforeEach
-    void init() throws Exception{
+    void init() {
         if (setUpIsDone){
             return;
         }

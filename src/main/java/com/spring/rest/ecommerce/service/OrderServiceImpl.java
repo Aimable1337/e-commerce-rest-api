@@ -2,6 +2,7 @@ package com.spring.rest.ecommerce.service;
 
 import com.spring.rest.ecommerce.entity.Order;
 import com.spring.rest.ecommerce.entity.Product;
+import com.spring.rest.ecommerce.entity.User;
 import com.spring.rest.ecommerce.exception.NotFoundException;
 import com.spring.rest.ecommerce.repository.OrderRepository;
 import com.spring.rest.ecommerce.repository.UserRepository;
@@ -34,13 +35,17 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<Order> findAllOrdersByUserId(long userId) {
-        if (orderRepository.findAllOrdersByUserId(userId).isEmpty())
+        User user = userRepository.findById(userId).orElseThrow(
+                () -> new NotFoundException("User with id: " + userId + " not found")
+        );
+        if (orderRepository.findAllOrdersByUserId(user).isEmpty())
             throw new NotFoundException("User with id " + userId + " has no orders");
-        return orderRepository.findAllOrdersByUserId(userId);
+        return orderRepository.findAllOrdersByUserId(user);
     }
 
     @Override
     public List<Order> findMyOrders(String userName){
+        System.out.println(">>>>>>>>>>>>>> " + userRepository.getIdByName(userName));
         List<Order> myOrders = findAllOrdersByUserId(userRepository.getIdByName(userName));
         if (!myOrders.isEmpty()){
             return findAllOrdersByUserId(userRepository.getIdByName(userName));
