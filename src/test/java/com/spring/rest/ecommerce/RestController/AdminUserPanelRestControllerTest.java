@@ -46,15 +46,10 @@ class AdminUserPanelRestControllerTest {
     @Transactional
     void shouldGetAllUsers() throws Exception{
         // given
-        UserAuthority testUserAuthority = new UserAuthority("test_test", "ROLE_USER");
-        testUserAuthority.setId(0);
-
-        UserDetail testUserDetails = new UserDetail("test", "test", "test", "test", "test","test", "test");
-        testUserDetails.setUserID(0);
-
-        User testUser = new User("test_test", "{bcrypt}$2y$12$KTim0KiUmdqXnrCKUK5Bd.WvSm0JROE8qy14cxzJ5y1j6GFrisaFS", true, testUserDetails, testUserAuthority);
-        testUser.setUserId(0);
-
+        User testUser = new User("test_test", "{bcrypt}$2y$12$KTim0KiUmdqXnrCKUK5Bd.WvSm0JROE8qy14cxzJ5y1j6GFrisaFS", true,
+                new UserDetail("test", "test", "test", "test", "test","test", "test"),
+                new UserAuthority("test_test", "ROLE_USER")
+        );
         userRepository.save(testUser);
         // when
         MvcResult mvcResult = mockMvc.perform(get("/admin/user-panel/users"))
@@ -70,15 +65,10 @@ class AdminUserPanelRestControllerTest {
     @Transactional
     void shouldGetSingleUserById() throws Exception {
         // given
-        UserAuthority testUserAuthority = new UserAuthority("test_test", "ROLE_USER");
-        testUserAuthority.setId(0);
-
-        UserDetail testUserDetails = new UserDetail("test", "test", "test", "test", "test","test", "test");
-        testUserDetails.setUserID(0);
-
-        User testUser = new User("test_test", "{bcrypt}$2y$12$KTim0KiUmdqXnrCKUK5Bd.WvSm0JROE8qy14cxzJ5y1j6GFrisaFS", true, testUserDetails, testUserAuthority);
-        testUser.setUserId(0);
-
+        User testUser = new User("test_test", "{bcrypt}$2y$12$KTim0KiUmdqXnrCKUK5Bd.WvSm0JROE8qy14cxzJ5y1j6GFrisaFS", true,
+                new UserDetail("test", "test", "test", "test", "test","test", "test"),
+                new UserAuthority("test_test", "ROLE_USER")
+        );
         userRepository.save(testUser);
         // when
         MvcResult mvcResult = mockMvc.perform(get("/admin/user-panel/users/id=" + testUser.getUserId()))
@@ -96,15 +86,10 @@ class AdminUserPanelRestControllerTest {
     @Transactional
     void getUserByUserName() throws Exception {
         // given
-        UserAuthority testUserAuthority = new UserAuthority("test_test", "ROLE_USER");
-        testUserAuthority.setId(0);
-
-        UserDetail testUserDetails = new UserDetail("test", "test", "test", "test", "test","test", "test");
-        testUserDetails.setUserID(0);
-
-        User testUser = new User("test_test", "{bcrypt}$2y$12$KTim0KiUmdqXnrCKUK5Bd.WvSm0JROE8qy14cxzJ5y1j6GFrisaFS", true, testUserDetails, testUserAuthority);
-        testUser.setUserId(0);
-
+        User testUser = new User("test_test", "{bcrypt}$2y$12$KTim0KiUmdqXnrCKUK5Bd.WvSm0JROE8qy14cxzJ5y1j6GFrisaFS", true,
+                new UserDetail("test", "test", "test", "test", "test","test", "test"),
+                new UserAuthority("test_test", "ROLE_USER")
+        );
         userRepository.save(testUser);
         // when
         MvcResult mvcResult = mockMvc.perform(get("/admin/user-panel/users/name=" + testUser.getUserName()))
@@ -122,14 +107,10 @@ class AdminUserPanelRestControllerTest {
     @Transactional
     void shouldCreateUser() throws Exception{
         // given
-        UserAuthority testUserAuthority = new UserAuthority("test_test", "ROLE_USER");
-        testUserAuthority.setId(0);
-
-        UserDetail testUserDetails = new UserDetail("test", "test", "test", "test", "test","test", "test");
-        testUserDetails.setUserID(0);
-
-        User testUser = new User("test_test", "{bcrypt}$2y$12$KTim0KiUmdqXnrCKUK5Bd.WvSm0JROE8qy14cxzJ5y1j6GFrisaFS", true, testUserDetails, testUserAuthority);
-        testUser.setUserId(0);
+        User testUser = new User("test_test", "{bcrypt}$2y$12$KTim0KiUmdqXnrCKUK5Bd.WvSm0JROE8qy14cxzJ5y1j6GFrisaFS", true,
+                new UserDetail("test", "test", "test", "test", "test","test", "test"),
+                new UserAuthority("test_test", "ROLE_USER")
+        );
         // when
         MvcResult mvcResult = mockMvc.perform(post("/admin/user-panel/users")
                 .content(objectMapper.writeValueAsString(testUser))
@@ -147,17 +128,11 @@ class AdminUserPanelRestControllerTest {
     @Transactional
     void updateUser() throws Exception {
         // given
-        UserAuthority testUserAuthority = new UserAuthority("test_test", "ROLE_USER");
-        testUserAuthority.setId(0);
-
-        UserDetail testUserDetails = new UserDetail("test", "test", "test", "test", "test","test", "test");
-        testUserDetails.setUserID(0);
-
-        User testUser = new User("test_test", "{bcrypt}$2y$12$KTim0KiUmdqXnrCKUK5Bd.WvSm0JROE8qy14cxzJ5y1j6GFrisaFS", true, testUserDetails, testUserAuthority);
-        testUser.setUserId(0);
-
+        User testUser = new User("test_test", "{bcrypt}$2y$12$KTim0KiUmdqXnrCKUK5Bd.WvSm0JROE8qy14cxzJ5y1j6GFrisaFS", true,
+                new UserDetail("test", "test", "test", "test", "test","test", "test"),
+                new UserAuthority("test_test", "ROLE_USER")
+        );
         userRepository.save(testUser);
-
         testUser.setPassword("change");
         testUser.setUserName("change");
         // when
@@ -178,15 +153,10 @@ class AdminUserPanelRestControllerTest {
     @Transactional
     void shouldChangeAuthority() throws Exception{
         // given
-        UserAuthority testUserAuthority = new UserAuthority("test_test", "ROLE_USER");
-        testUserAuthority.setId(0);
-
-        UserDetail testUserDetails = new UserDetail("test", "test", "test", "test", "test","test", "test");
-        testUserDetails.setUserID(0);
-
-        User testUser = new User("test_test", "{bcrypt}$2y$12$KTim0KiUmdqXnrCKUK5Bd.WvSm0JROE8qy14cxzJ5y1j6GFrisaFS", true, testUserDetails, testUserAuthority);
-        testUser.setUserId(0);
-
+        User testUser = new User("test_test", "{bcrypt}$2y$12$KTim0KiUmdqXnrCKUK5Bd.WvSm0JROE8qy14cxzJ5y1j6GFrisaFS", true,
+                new UserDetail("test", "test", "test", "test", "test","test", "test"),
+                new UserAuthority("test_test", "ROLE_USER")
+        );
         userRepository.save(testUser);
 
         UserAuthority newAuthority = new UserAuthority(testUser.getUserName(), "ROLE_EMPLOYEE");
@@ -206,17 +176,12 @@ class AdminUserPanelRestControllerTest {
 
     @Test
     @Transactional
-    void banUser() throws Exception{
+    void shouldBanUser() throws Exception{
         // given
-        UserAuthority testUserAuthority = new UserAuthority("test_test", "ROLE_USER");
-        testUserAuthority.setId(0);
-
-        UserDetail testUserDetails = new UserDetail("test", "test", "test", "test", "test","test", "test");
-        testUserDetails.setUserID(0);
-
-        User testUser = new User("test_test", "{bcrypt}$2y$12$KTim0KiUmdqXnrCKUK5Bd.WvSm0JROE8qy14cxzJ5y1j6GFrisaFS", true, testUserDetails, testUserAuthority);
-        testUser.setUserId(0);
-
+        User testUser = new User("test_test", "{bcrypt}$2y$12$KTim0KiUmdqXnrCKUK5Bd.WvSm0JROE8qy14cxzJ5y1j6GFrisaFS", true,
+                new UserDetail("test", "test", "test", "test", "test","test", "test"),
+                new UserAuthority("test_test", "ROLE_USER")
+        );
         userRepository.save(testUser);
         // when
         MvcResult mvcResult = mockMvc.perform(put("/admin/user-panel/ban-user/" + testUser.getUserId()))
@@ -236,17 +201,12 @@ class AdminUserPanelRestControllerTest {
 
     @Test
     @Transactional
-    void deleteUser() throws Exception{
+    void shouldDeleteUser() throws Exception{
         // given
-        UserAuthority testUserAuthority = new UserAuthority("test_test", "ROLE_USER");
-        testUserAuthority.setId(0);
-
-        UserDetail testUserDetails = new UserDetail("test", "test", "test", "test", "test","test", "test");
-        testUserDetails.setUserID(0);
-
-        User testUser = new User("test_test", "{bcrypt}$2y$12$KTim0KiUmdqXnrCKUK5Bd.WvSm0JROE8qy14cxzJ5y1j6GFrisaFS", true, testUserDetails, testUserAuthority);
-        testUser.setUserId(0);
-
+        User testUser = new User("test_test", "{bcrypt}$2y$12$KTim0KiUmdqXnrCKUK5Bd.WvSm0JROE8qy14cxzJ5y1j6GFrisaFS", true,
+                new UserDetail("test", "test", "test", "test", "test","test", "test"),
+                new UserAuthority("test_test", "ROLE_USER")
+        );
         userRepository.save(testUser);
         // when
         MvcResult mvcResult = mockMvc.perform(delete("/admin/user-panel/users/" + testUser.getUserId()))

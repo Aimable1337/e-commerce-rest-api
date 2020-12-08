@@ -38,10 +38,7 @@ class ProductRestControllerTest {
     @Transactional
     void ShouldGetSingleProduct() throws Exception{
         // given
-        Product testProduct = new Product();
-        testProduct.setProductName("test");
-        testProduct.setProductCategory("test");
-        testProduct.setProductPrice(100);
+        Product testProduct = new Product("test", "test",100);
         productRepository.save(testProduct);
         // when
         MvcResult mvcResult = mockMvc.perform(get("/products/" + testProduct.getProductID()))
@@ -60,10 +57,7 @@ class ProductRestControllerTest {
     @Transactional
     void ShouldGetAllProducts() throws Exception{
         // given
-        Product testProduct = new Product();
-        testProduct.setProductName("test");
-        testProduct.setProductCategory("test");
-        testProduct.setProductPrice(100);
+        Product testProduct = new Product("test", "test",100);
         productRepository.save(testProduct);
         // when
         MvcResult mvcResult = mockMvc.perform(get("/products"))
@@ -74,5 +68,4 @@ class ProductRestControllerTest {
         List products = objectMapper.readValue(mvcResult.getResponse().getContentAsString(), List.class);
         assertThat(products).isNotNull();
     }
-
 }

@@ -40,10 +40,10 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<Order> findMyOrders(HttpServletRequest request){
-        List<Order> myOrders = findAllOrdersByUserId(userRepository.getIdByName(request.getRemoteUser()));
+    public List<Order> findMyOrders(String userName){
+        List<Order> myOrders = findAllOrdersByUserId(userRepository.getIdByName(userName));
         if (!myOrders.isEmpty()){
-            return findAllOrdersByUserId(userRepository.getIdByName(request.getRemoteUser()));
+            return findAllOrdersByUserId(userRepository.getIdByName(userName));
         } else {
             throw new NotFoundException("You have no orders");
         }
@@ -76,7 +76,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public long createOrder(List<Product> products, HttpServletRequest request) {
-        Order order = new Order(0, LocalDate.now(), userRepository.findByUserName(request.getRemoteUser()), products);
+        Order order = new Order(LocalDate.now(), userRepository.findByUserName(request.getRemoteUser()), products);
         orderRepository.save(order);
         return order.getOrderId();
     }

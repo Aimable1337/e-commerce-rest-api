@@ -36,13 +36,13 @@ public class UserOrdersRestController {
     @GetMapping("/orders")
     public ResponseEntity<List<Order>> getMyOrders(HttpServletRequest request) {
         return new ResponseEntity<>(
-                orderService.findMyOrders(request),
+                orderService.findMyOrders(request.getRemoteUser()),
                 headerGenerator.getHeadersForSuccessGetMethod(),
                 HttpStatus.OK
         );
     }
 
-    @GetMapping("/{theId}")
+    @GetMapping("/orders/{theId}")
     public ResponseEntity<Order> getMyOrderById(@PathVariable long theId) {
         return new ResponseEntity<>(
                 orderService.findOrderById(theId),

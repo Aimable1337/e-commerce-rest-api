@@ -32,23 +32,23 @@ public class EmployeeProductPanelRestController {
     }
 
     @PostMapping("/products")
-    public ResponseEntity<Product> createProduct(@RequestBody Product theProduct,
+    public ResponseEntity<ResponseMessage> createProduct(@RequestBody Product theProduct,
                                                  HttpServletRequest request){
         theProduct.setProductID(0);
         productService.save(theProduct);
         return new ResponseEntity<>(
-                theProduct,
+                responseMessageGenerator.getResponseForSuccessPostMethod(theProduct.getProductID()),
                 headerGenerator.getHeadersForSuccessPostMethod(request, theProduct.getProductID()),
                 HttpStatus.CREATED
         );
     }
 
     @PutMapping("/products")
-    public ResponseEntity<Product> updateProduct(@RequestBody Product theProduct,
+    public ResponseEntity<ResponseMessage> updateProduct(@RequestBody Product theProduct,
                                                  HttpServletRequest request){
         productService.save(theProduct);
         return new ResponseEntity<>(
-                theProduct,
+                responseMessageGenerator.getResponseForSuccessPutMethod(theProduct.getProductID()),
                 headerGenerator.getHeadersForSuccessPostMethod(request, theProduct.getProductID()),
                 HttpStatus.ACCEPTED
         );

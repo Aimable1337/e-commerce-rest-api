@@ -3,6 +3,7 @@ package com.spring.rest.ecommerce.RestController;
 import com.spring.rest.ecommerce.entity.User;
 
 import com.spring.rest.ecommerce.entity.UserAuthority;
+import com.spring.rest.ecommerce.entity.UserDetail;
 import com.spring.rest.ecommerce.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -30,15 +31,10 @@ public class LoginTest {
 
     @BeforeEach
     void init(){
-        User testUser = new User();
-        testUser.setPassword("{bcrypt}$2y$12$KTim0KiUmdqXnrCKUK5Bd.WvSm0JROE8qy14cxzJ5y1j6GFrisaFS"); // pass = "test"
-        testUser.setUserName("test");
-        testUser.setEnabled(true);
-        UserAuthority testUserAuthority = new UserAuthority();
-        testUserAuthority.setAuthority("ROLE_USER");
-        testUserAuthority.setUsername("test");
-        testUser.setUserAuthority(testUserAuthority);
-
+        User testUser = new User("test", "{bcrypt}$2y$12$KTim0KiUmdqXnrCKUK5Bd.WvSm0JROE8qy14cxzJ5y1j6GFrisaFS", true,
+                new UserDetail("test", "test", "test", "test", "test","test", "test"),
+                new UserAuthority("test", "ROLE_USER")
+        );
         userService.save(testUser);
     }
 

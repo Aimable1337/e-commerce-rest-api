@@ -32,13 +32,6 @@ public class Order {
     )
     private List<Product> orderList;
 
-    public Order(long orderId, LocalDate orderDate, User userId, List<Product> orderList) {
-        this.orderId = orderId;
-        this.orderDate = orderDate;
-        this.userId = userId;
-        this.orderList = orderList;
-    }
-
     public Order() { }
 
     public Order(LocalDate orderDate, User userId, List<Product> orderList) {
