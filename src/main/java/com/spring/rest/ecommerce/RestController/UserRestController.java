@@ -1,5 +1,7 @@
 package com.spring.rest.ecommerce.RestController;
 
+import com.spring.rest.ecommerce.DTO.NewPasswordDTO;
+import com.spring.rest.ecommerce.DTO.NewUserNameDTO;
 import com.spring.rest.ecommerce.entity.UserDetail;
 import com.spring.rest.ecommerce.headers.HeaderGenerator;
 import com.spring.rest.ecommerce.response.ResponseMessage;
@@ -41,18 +43,17 @@ public class UserRestController {
     }
 
     @PutMapping("/change-username")
-    public ResponseEntity<ResponseMessage> changeMyUserName(HttpServletRequest request, @RequestBody String newUserName) {
+    public ResponseEntity<ResponseMessage> changeMyUserName(HttpServletRequest request, @RequestBody NewUserNameDTO newUserName) {
         return new ResponseEntity<>(
-                responseMessageGenerator.getResponseForSuccessPutMethod(userService.changeMyUserName(request, newUserName)),
+                responseMessageGenerator.getResponseForSuccessPutMethod(userService.changeMyUserName(request, newUserName.getNewUserName())),
                 headerGenerator.getHeadersForSuccessGetMethod(),
                 HttpStatus.ACCEPTED
         );
     }
 
     @PutMapping("/change-password")
-    public ResponseEntity<ResponseMessage> changeMyPassword(@RequestBody String oldPassword,
-                                                            @RequestBody String newPassword) {
-        userService.changeMyPassword(oldPassword, newPassword);
+    public ResponseEntity<ResponseMessage> changeMyPassword(@RequestBody NewPasswordDTO newPassword) {
+        userService.changeMyPassword(newPassword.getOldPassword(), newPassword.getNewPassword());
         return new ResponseEntity<>(
                 responseMessageGenerator.getResponseForSuccessPutMethod(userService.getUserId()),
                 headerGenerator.getHeadersForSuccessGetMethod(),

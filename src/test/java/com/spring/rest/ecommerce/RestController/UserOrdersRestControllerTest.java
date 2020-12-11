@@ -1,22 +1,23 @@
 package com.spring.rest.ecommerce.RestController;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.spring.rest.ecommerce.entity.Order;
-import com.spring.rest.ecommerce.entity.User;
-import com.spring.rest.ecommerce.entity.UserAuthority;
-import com.spring.rest.ecommerce.entity.UserDetail;
+import com.spring.rest.ecommerce.entity.*;
 import com.spring.rest.ecommerce.repository.OrderRepository;
 import com.spring.rest.ecommerce.repository.UserRepository;
+import com.spring.rest.ecommerce.response.ResponseMessage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
 import javax.transaction.Transactional;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -60,9 +61,8 @@ class UserOrdersRestControllerTest {
     }
 
     @Test
-    @Transactional
-    void getMyOrders() throws Exception{
-        // when
+    void shouldReturnAllMyOrders() throws Exception{
+        // given
         LocalDate date = LocalDate.now();
         Order testOrder = new Order(date, testUser, null);
         orderRepository.save(testOrder);
@@ -83,19 +83,68 @@ class UserOrdersRestControllerTest {
         // then
         List response = objectMapper.readValue(result.getResponse().getContentAsString(), List.class);
         assertThat(response).isNotNull();
+        assertThat(response.size()).isEqualTo(1);
     }
 
     @Test
-    void getMyOrderById() {
+    void shouldReturnMyOrderById() throws Exception{
         // given
+        LocalDate date = LocalDate.now();
+        Order testOrder = new Order(date, testUser, null);
+        orderRepository.save(testOrder);
         // when
+        MvcResult login = mockMvc.perform(post("/login")
+                .content("{\"username\" : \"test_test\", \"password\" : \"test\"}"))
+                .andDo(print())
+                .andExpect(status().is(200))
+                .andReturn();
+        String token = login.getResponse().getHeader("Authorization");
+
+        mockMvc.perform(get("/user/orders/" + testOrder.getOrderId() * 2)
+                .header("Authorization", token)
+        )
+                .andDo(print())
+                .andExpect(status().is(404))
+                .andReturn();
+
+        MvcResult result = mockMvc.perform(get("/user/orders/" + testOrder.getOrderId())
+                .header("Authorization", token)
+        )
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andReturn();
         // then
+        Order response = objectMapper.readValue(result.getResponse().getContentAsString(), Order.class);
+        assertThat(response).isNotNull();
+        assertThat(response.getOrderDate()).isEqualTo(date);
+        assertThat(response.getOrderId()).isEqualTo(testOrder.getOrderId());
     }
 
     @Test
-    void createOrder() {
+    void shouldCreateOrder() throws Exception{
         // given
+        List<Product> testListOfProducts = new ArrayList<>();
+        testListOfProducts.add(new Product("test", "test", 100));
+        testListOfProducts.add(new Product("test1", "test1", 200));
+        testListOfProducts.add(new Product("test2", "test2", 300));
         // when
+        MvcResult login = mockMvc.perform(post("/login")
+                .content("{\"username\" : \"test_test\", \"password\" : \"test\"}"))
+                .andDo(print())
+                .andExpect(status().is(200))
+                .andReturn();
+        String token = login.getResponse().getHeader("Authorization");
+        MvcResult result = mockMvc.perform(post("/user/orders")
+                .content(objectMapper.writeValueAsString(testListOfProducts))
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON)
+                .header("Authorization", token)
+        )
+                .andDo(print())
+                .andExpect(status().isCreated())
+                .andReturn();
         // then
+        ResponseMessage responseMessage = objectMapper.readValue(result.getResponse().getContentAsString(), ResponseMessage.class);
+        assertThat(responseMessage).isNotNull();
+        assertThat(responseMessage.getMessage().contains("New resource created with id:")).isTrue();
     }
 }

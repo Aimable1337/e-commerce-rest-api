@@ -60,9 +60,9 @@ public class UserOrdersRestController {
     public ResponseEntity<ResponseMessage> createOrder(@RequestBody List<Product> products, HttpServletRequest request) {
         long newOrderId = orderService.createOrder(products, request);
         return new ResponseEntity<>(
-                responseMessageGenerator.getResponseForSuccessPutMethod(newOrderId),
+                responseMessageGenerator.getResponseForSuccessPostMethod(newOrderId),
                 headerGenerator.getHeadersForSuccessGetMethod(),
-                HttpStatus.OK
+                HttpStatus.CREATED
         );
     }
 
