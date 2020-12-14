@@ -1,11 +1,13 @@
 package com.spring.rest.ecommerce.RestController;
 
+import com.spring.rest.ecommerce.DTO.UserViewDTO;
 import com.spring.rest.ecommerce.entity.User;
 import com.spring.rest.ecommerce.entity.UserAuthority;
 import com.spring.rest.ecommerce.headers.HeaderGenerator;
 import com.spring.rest.ecommerce.response.ResponseMessage;
 import com.spring.rest.ecommerce.response.ResponseMessageGenerator;
 import com.spring.rest.ecommerce.service.UserService;
+import com.spring.rest.ecommerce.service.UserViewer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,41 +22,45 @@ public class AdminUserPanelRestController {
 
     private final UserService userService;
 
+    private final UserViewer userViewer;
+
     private final HeaderGenerator headerGenerator;
 
     private final ResponseMessageGenerator responseMessageGenerator;
 
     @Autowired
     public AdminUserPanelRestController(UserService userService,
+                                        UserViewer userViewer,
                                         HeaderGenerator headerGenerator,
                                         ResponseMessageGenerator responseMessageGenerator) {
         this.userService = userService;
+        this.userViewer = userViewer;
         this.responseMessageGenerator = responseMessageGenerator;
         this.headerGenerator = headerGenerator;
     }
 
     @GetMapping("/users")
-    public ResponseEntity<List<User>> getAllUsers() {
+    public ResponseEntity<List<UserViewDTO>> getAllUsers() {
         return new ResponseEntity<>(
-                userService.findAll(),
+                userViewer.viewAll(),
                 headerGenerator.getHeadersForSuccessGetMethod(),
                 HttpStatus.OK
         );
     }
 
     @GetMapping("/users/id={theId}")
-    public ResponseEntity<User> getUserById(@PathVariable long theId) {
+    public ResponseEntity<UserViewDTO> getUserById(@PathVariable long theId) {
         return new ResponseEntity<>(
-                userService.findByID(theId),
+                userViewer.viewByID(theId),
                 headerGenerator.getHeadersForSuccessGetMethod(),
                 HttpStatus.OK
         );
     }
 
     @GetMapping("/users/name={userName}")
-    public ResponseEntity<User> getUserByUserName(@PathVariable String userName) {
+    public ResponseEntity<UserViewDTO> getUserByUserName(@PathVariable String userName) {
         return new ResponseEntity<>(
-                userService.findByUserName(userName),
+                userViewer.viewByUserName(userName),
                 headerGenerator.getHeadersForSuccessGetMethod(),
                 HttpStatus.OK
         );

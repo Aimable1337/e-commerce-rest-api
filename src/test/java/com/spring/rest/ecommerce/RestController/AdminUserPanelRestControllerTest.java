@@ -1,6 +1,7 @@
 package com.spring.rest.ecommerce.RestController;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.spring.rest.ecommerce.DTO.UserViewDTO;
 import com.spring.rest.ecommerce.entity.User;
 import com.spring.rest.ecommerce.entity.UserAuthority;
 import com.spring.rest.ecommerce.entity.UserDetail;
@@ -76,7 +77,7 @@ class AdminUserPanelRestControllerTest {
                 .andExpect(status().isOk())
                 .andReturn();
         // then
-        User user = objectMapper.readValue(mvcResult.getResponse().getContentAsString(), User.class);
+        UserViewDTO user = objectMapper.readValue(mvcResult.getResponse().getContentAsString(), UserViewDTO.class);
         assertThat(user).isNotNull();
         assertThat(user.getUserName()).isEqualTo(testUser.getUserName());
         assertThat(user.getUserId()).isEqualTo(testUser.getUserId());
@@ -97,7 +98,7 @@ class AdminUserPanelRestControllerTest {
                 .andExpect(status().isOk())
                 .andReturn();
         // then
-        User user = objectMapper.readValue(mvcResult.getResponse().getContentAsString(), User.class);
+        UserViewDTO user = objectMapper.readValue(mvcResult.getResponse().getContentAsString(), UserViewDTO.class);
         assertThat(user).isNotNull();
         assertThat(user.getUserName()).isEqualTo(testUser.getUserName());
         assertThat(user.getUserId()).isEqualTo(testUser.getUserId());
