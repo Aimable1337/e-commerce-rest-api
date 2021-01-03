@@ -1,8 +1,8 @@
 package com.spring.rest.ecommerce.RestController;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.spring.rest.ecommerce.DTO.NewPasswordDTO;
-import com.spring.rest.ecommerce.DTO.NewUserNameDTO;
+import com.spring.rest.ecommerce.DTO.User.NewPasswordDTO;
+import com.spring.rest.ecommerce.DTO.User.NewUserNameDTO;
 import com.spring.rest.ecommerce.entity.User;
 import com.spring.rest.ecommerce.entity.UserAuthority;
 import com.spring.rest.ecommerce.entity.UserDetail;
@@ -76,7 +76,7 @@ class UserRestControllerTest {
         // then
         UserDetail response = objectMapper.readValue(result.getResponse().getContentAsString(), UserDetail.class);
         assertThat(response).isNotNull();
-        assertThat(response.getUserID()).isEqualTo(testUser.getUserDetails().getUserID());
+        assertThat(response.getId()).isEqualTo(testUser.getUserDetails().getId());
         assertThat(response.getAddress()).isEqualTo(testUser.getUserDetails().getAddress());
     }
 

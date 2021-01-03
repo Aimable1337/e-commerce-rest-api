@@ -80,7 +80,9 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public long createOrder(List<Product> products, HttpServletRequest request) {
-        Order order = new Order(LocalDate.now(), userRepository.findByUserName(request.getRemoteUser()), products);
+        Order order = new Order(LocalDate.now(), userRepository.findByUserName(request.getRemoteUser()).orElseThrow(
+                () -> new NotFoundException("User not found in data base")
+        ), products);
         orderRepository.save(order);
         return order.getOrderId();
     }

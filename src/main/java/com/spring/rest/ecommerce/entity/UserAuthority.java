@@ -7,14 +7,11 @@ import javax.persistence.*;
 public class UserAuthority {
 
     @Id
-    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "username")
     private String username;
 
-    @Column(name = "authority")
     private String authority;
 
     public UserAuthority() {}

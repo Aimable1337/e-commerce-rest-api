@@ -32,10 +32,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public void save(UserDetail theUserDetail) {
-        if(theUserDetail.getUserID() == 0 || userDetailRepository.findById(theUserDetail.getUserID()).isPresent()){
+        if(theUserDetail.getId() == 0 || userDetailRepository.findById(theUserDetail.getId()).isPresent()){
             userDetailRepository.save(theUserDetail);
         } else {
-            throw new NotFoundException("User details with id: " + theUserDetail.getUserID() + " does not exist");
+            throw new NotFoundException("User details with id: " + theUserDetail.getId() + " does not exist");
         }
     }
 

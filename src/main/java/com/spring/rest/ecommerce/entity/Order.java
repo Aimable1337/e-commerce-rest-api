@@ -14,7 +14,6 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long orderId;
 
-    @Column(name = "order_date")
     private LocalDate orderDate;
 
     @OneToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE,

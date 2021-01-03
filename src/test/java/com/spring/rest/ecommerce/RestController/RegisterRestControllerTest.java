@@ -56,7 +56,7 @@ class RegisterRestControllerTest {
                 .andReturn();
         // then
         ResponseMessage response = objectMapper.readValue(mvcResult.getResponse().getContentAsString(), ResponseMessage.class);
-        User createdUser = userRepository.findByUserName("test_test");
+        User createdUser = userRepository.findByUserName("test_test").get();
         assertThat(response).isNotNull();
         assertThat(response.getMessage()).isEqualTo(responseMessageGenerator.getResponseForSuccessPostMethod(createdUser.getUserId()).getMessage());
     }

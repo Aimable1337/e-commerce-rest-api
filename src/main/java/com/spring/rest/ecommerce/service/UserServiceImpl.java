@@ -38,9 +38,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findByUserName(String userName) {
-        if(userRepository.findByUserName(userName) != null)
-            return userRepository.findByUserName(userName);
-        throw new NotFoundException("User is not found by name: " + userName);
+            return userRepository.findByUserName(userName).orElseThrow(
+                    () -> new NotFoundException("User is not found by name: " + userName)
+            );
     }
 
     @Override
@@ -68,7 +68,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public long changeMyUserName(HttpServletRequest request, String newUserName) {
         User user = findByUserName(request.getRemoteUser());
-        if(userRepository.findByUserName(newUserName) == null){
+        if(!userRepository.findByUserName(newUserName).isPresent()){
             user.setUserName(newUserName);
             user.getUserAuthority().setUsername(newUserName);
             userRepository.save(user);
@@ -107,7 +107,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void changeMyDetails(UserDetail newUserDetails) {
-      newUserDetails.setUserID(getUserId());
+      newUserDetails.setId(getUserId());
       User user = findByID(getUserId());
       user.setUserDetails(newUserDetails);
       userRepository.save(user);

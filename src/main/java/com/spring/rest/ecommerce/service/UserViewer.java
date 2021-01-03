@@ -1,6 +1,6 @@
 package com.spring.rest.ecommerce.service;
 
-import com.spring.rest.ecommerce.DTO.UserViewDTO;
+import com.spring.rest.ecommerce.DTO.User.UserViewDTO;
 
 import java.util.List;
 

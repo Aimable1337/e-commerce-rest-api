@@ -1,7 +1,7 @@
 package com.spring.rest.ecommerce.RestController;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.spring.rest.ecommerce.DTO.UserViewDTO;
+import com.spring.rest.ecommerce.DTO.User.UserViewDTO;
 import com.spring.rest.ecommerce.entity.User;
 import com.spring.rest.ecommerce.entity.UserAuthority;
 import com.spring.rest.ecommerce.entity.UserDetail;
@@ -18,6 +18,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
+import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import java.util.List;
 
@@ -42,6 +43,9 @@ class AdminUserPanelRestControllerTest {
 
     @Autowired
     private ResponseMessageGenerator responseMessageGenerator;
+
+    @Autowired
+    private EntityManager entityManager;
 
     @Test
     @Transactional
@@ -210,12 +214,13 @@ class AdminUserPanelRestControllerTest {
         );
         userRepository.save(testUser);
         // when
-        MvcResult mvcResult = mockMvc.perform(delete("/admin/user-panel/users/" + testUser.getUserId()))
+        mockMvc.perform(delete("/admin/user-panel/users/" + testUser.getUserId()))
                 .andDo(print())
                 .andExpect(status().isAccepted())
                 .andReturn();
+        entityManager.flush();
         // then
-        mockMvc.perform(get("/admin/user-panel/users/id=" + testUser.getUserId()))
+        MvcResult result = mockMvc.perform(get("/admin/user-panel/users/id=" + testUser.getUserId()))
                 .andDo(print())
                 .andExpect(status().is(404))
                 .andReturn();

@@ -1,4 +1,4 @@
-package com.spring.rest.ecommerce.DTO;
+package com.spring.rest.ecommerce.DTO.User;
 
 public class NewPasswordDTO {
 

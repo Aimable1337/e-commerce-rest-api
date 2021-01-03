@@ -1,6 +1,6 @@
 package com.spring.rest.ecommerce.RestController;
 
-import com.spring.rest.ecommerce.DTO.UserViewDTO;
+import com.spring.rest.ecommerce.DTO.User.UserViewDTO;
 import com.spring.rest.ecommerce.entity.User;
 import com.spring.rest.ecommerce.entity.UserAuthority;
 import com.spring.rest.ecommerce.headers.HeaderGenerator;

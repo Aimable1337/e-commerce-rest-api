@@ -9,27 +9,20 @@ public class UserDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private long userID;
+    private long id;
 
-    @Column(name = "first_name")
     private String firstName;
 
-    @Column(name = "last_name")
     private String lastName;
 
-    @Column(name = "email")
     private String email;
 
-    @Column(name = "address")
     private String address;
 
-    @Column(name = "zip_code")
     private String zipCode;
 
-    @Column(name = "city")
     private String city;
 
-    @Column(name = "phone_number")
     private String phoneNumber;
 
     public UserDetail() {}
@@ -44,12 +37,12 @@ public class UserDetail {
         this.phoneNumber = phoneNumber;
     }
 
-    public long getUserID() {
-        return userID;
+    public long getId() {
+        return id;
     }
 
-    public void setUserID(long userID) {
-        this.userID = userID;
+    public void setId(long userID) {
+        this.id = userID;
     }
 
     public String getFirstName() {
@@ -111,7 +104,7 @@ public class UserDetail {
     @Override
     public String toString() {
         return "UserDetails{" +
-                "userID=" + userID +
+                "userID=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +

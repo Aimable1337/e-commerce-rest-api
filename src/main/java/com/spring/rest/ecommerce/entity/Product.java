@@ -11,13 +11,10 @@ public class Product {
     @Column(name = "id")
     private long productID;
 
-    @Column(name = "product_name")
     private String productName;
 
-    @Column(name = "product_category")
     private String productCategory;
 
-    @Column(name = "product_price")
     private int productPrice;
 
     public Product() {}

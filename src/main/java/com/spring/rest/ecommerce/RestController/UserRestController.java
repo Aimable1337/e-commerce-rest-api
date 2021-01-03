@@ -1,7 +1,7 @@
 package com.spring.rest.ecommerce.RestController;
 
-import com.spring.rest.ecommerce.DTO.NewPasswordDTO;
-import com.spring.rest.ecommerce.DTO.NewUserNameDTO;
+import com.spring.rest.ecommerce.DTO.User.NewPasswordDTO;
+import com.spring.rest.ecommerce.DTO.User.NewUserNameDTO;
 import com.spring.rest.ecommerce.entity.UserDetail;
 import com.spring.rest.ecommerce.headers.HeaderGenerator;
 import com.spring.rest.ecommerce.response.ResponseMessage;
