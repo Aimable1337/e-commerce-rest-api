@@ -45,9 +45,12 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<Order> findMyOrders(String userName){
-        List<Order> myOrders = findAllOrdersByUserId(userRepository.getIdByName(userName));
+        long id = userRepository.getIdByName(userName).orElseThrow(
+                () -> new NotFoundException("User with username: " + userName + " does not exist")
+        );
+        List<Order> myOrders = findAllOrdersByUserId(id);
         if (!myOrders.isEmpty()){
-            return findAllOrdersByUserId(userRepository.getIdByName(userName));
+            return findAllOrdersByUserId(id);
         } else {
             throw new NotFoundException("You have no orders");
         }

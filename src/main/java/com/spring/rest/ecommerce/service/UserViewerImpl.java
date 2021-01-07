@@ -1,5 +1,6 @@
 package com.spring.rest.ecommerce.service;
 
+import com.spring.rest.ecommerce.DTO.User.UserDetailViewDTO;
 import com.spring.rest.ecommerce.DTO.User.UserViewDTO;
 import com.spring.rest.ecommerce.entity.User;
 import com.spring.rest.ecommerce.exception.NotFoundException;
@@ -42,6 +43,21 @@ public class UserViewerImpl implements UserViewer{
     public UserViewDTO viewByUserName(String userName) {
         return userRepository.findByUserName(userName)
                 .map(UserViewDTO::new)
-                .orElseThrow(() -> new NotFoundException("User with id: " + userName + " does not exist"));
+                .orElseThrow(() -> new NotFoundException("User with username: " + userName + " does not exist"));
+    }
+
+    @Override
+    public UserDetailViewDTO viewUserDetailByUserName(String userName) {
+        return userRepository.findByUserName(userName)
+                .map(User::getUserDetails)
+                .map(UserDetailViewDTO::new)
+                .orElseThrow(() -> new NotFoundException("User with username: " + userName + " does not exist"));
+    }
+
+    @Override
+    public long getUserId(String userName) {
+        return userRepository.getIdByName(userName).orElseThrow(
+                () -> new NotFoundException("User with username: " + userName + " does not exist")
+        );
     }
 }

@@ -1,20 +1,20 @@
 package com.spring.rest.ecommerce.service;
 
-import com.spring.rest.ecommerce.DTO.User.NewPasswordDTO;
-import com.spring.rest.ecommerce.entity.UserAuthority;
-import com.spring.rest.ecommerce.entity.UserDetail;
+import com.spring.rest.ecommerce.DTO.User.*;
 
 public interface UserEditor {
 
-    void changeMyUserName(String newUserName);
+    long register(NewUserDTO newUserDTO);
 
-    void changeMyPassword(NewPasswordDTO newPasswordDTO);
+    void changeMyUserName(NewUserNameDTO newUserNameDTO, String userName);
 
-    void changeMyDetails(UserDetail newUserDetails);
+    void changeMyPassword(NewPasswordDTO newPasswordDTO, String userName);
 
-    void changeUsersAuthority(String userName, UserAuthority newAuthority);
+    void changeMyDetails(NewUserDetailsDTO newUserDetailsDTO, String userName);
 
-    boolean checkIfOldPasswordIsValid(String oldPassword);
+    void changeUsersAuthority(long theId, NewUsersAuthorityDTO newAuthority);
+
+    boolean checkIfOldPasswordIsValid(String oldPassword, String userPassword);
 
     void banUserById(long theId);
 

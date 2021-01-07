@@ -2,7 +2,7 @@ package com.spring.rest.ecommerce.headers;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 
@@ -21,10 +21,10 @@ public class HeaderGenerator {
         return httpHeaders;
     }
 
-    public HttpHeaders getHeadersForSuccessPostMethod(HttpServletRequest request, Long newResourceId) {
+    public HttpHeaders getHeadersForSuccessPostMethod(String uri, Long newResourceId) {
         HttpHeaders httpHeaders = new HttpHeaders();
         try {
-            httpHeaders.setLocation(new URI(request.getRequestURI() + "/" + newResourceId));
+            httpHeaders.setLocation(new URI(uri + "/" + newResourceId));
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }

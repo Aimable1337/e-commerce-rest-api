@@ -2,9 +2,7 @@ package com.spring.rest.ecommerce.DTO.User;
 
 import com.spring.rest.ecommerce.entity.UserDetail;
 
-public class UserDetailsEditDTO {
-
-    private long id;
+public class NewUserDetailsDTO {
 
     private String firstName;
 
@@ -20,10 +18,10 @@ public class UserDetailsEditDTO {
 
     private String phoneNumber;
 
-    public UserDetailsEditDTO() {}
+    public NewUserDetailsDTO() {}
 
-    UserDetail toEntity(){
-        UserDetail userDetails = new UserDetail(
+    public UserDetail toEntity(){
+        return new UserDetail(
                 this.firstName,
                 this.lastName,
                 this.email,
@@ -32,7 +30,5 @@ public class UserDetailsEditDTO {
                 this.city,
                 this.phoneNumber
         );
-        userDetails.setId(this.id);
-        return userDetails;
     }
 }

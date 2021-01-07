@@ -11,8 +11,6 @@ public class UserViewDTO {
 
     private UserDetail userDetails;
 
-    public UserViewDTO() {}
-
     public UserViewDTO(User source) {
         this.userId = source.getUserId();
         this.userName = source.getUserName();
