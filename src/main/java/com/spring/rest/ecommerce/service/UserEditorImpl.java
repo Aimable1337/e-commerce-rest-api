@@ -65,8 +65,7 @@ public class UserEditorImpl implements UserEditor {
         User user = userRepository.findByUserName(userName).orElseThrow(
                 () -> new NotFoundException("User not found in data base")
         );
-        UserDetail newUserDetail = newUserDetailsDTO.toEntity();
-        user.setUserDetails(newUserDetail);
+        user.setUserDetails(newUserDetailsDTO.toEntity());
         userRepository.save(user);
     }
 

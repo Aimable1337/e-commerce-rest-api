@@ -38,7 +38,7 @@ public class EmployeeProductPanelRestController {
         productService.save(theProduct);
         return new ResponseEntity<>(
                 responseMessageGenerator.getResponseForSuccessPostMethod(theProduct.getProductID()),
-                headerGenerator.getHeadersForSuccessPostMethod(request, theProduct.getProductID()),
+                headerGenerator.getHeadersForSuccessPostMethod(request.getRequestURI(), theProduct.getProductID()),
                 HttpStatus.CREATED
         );
     }
@@ -49,7 +49,7 @@ public class EmployeeProductPanelRestController {
         productService.save(theProduct);
         return new ResponseEntity<>(
                 responseMessageGenerator.getResponseForSuccessPutMethod(theProduct.getProductID()),
-                headerGenerator.getHeadersForSuccessPostMethod(request, theProduct.getProductID()),
+                headerGenerator.getHeadersForSuccessPostMethod(request.getRequestURI(), theProduct.getProductID()),
                 HttpStatus.ACCEPTED
         );
     }

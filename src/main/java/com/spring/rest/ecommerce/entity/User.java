@@ -50,6 +50,7 @@ public class User {
 
     public void setUserName(String userName) {
         this.userName = userName;
+        this.userAuthority.setUsername(userName);
     }
 
     public String getPassword() {

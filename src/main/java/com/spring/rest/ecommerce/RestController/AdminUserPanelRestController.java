@@ -68,9 +68,10 @@ public class AdminUserPanelRestController {
     }
 
     @PostMapping("/users")
-    public ResponseEntity<User> createUser(@RequestBody NewUserDTO newUserDTO, HttpServletRequest request) {
+    public ResponseEntity<ResponseMessage> createUser(@RequestBody NewUserDTO newUserDTO, HttpServletRequest request) {
         long id = userEditor.register(newUserDTO);
         return new ResponseEntity<>(
+                responseMessageGenerator.getMessageForSuccessUserRegistration(id),
                 headerGenerator.getHeadersForSuccessPostMethod(request.getRequestURI(), id),
                 HttpStatus.CREATED
         );

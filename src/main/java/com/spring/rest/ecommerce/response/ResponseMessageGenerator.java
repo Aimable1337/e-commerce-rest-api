@@ -32,4 +32,11 @@ public class ResponseMessageGenerator {
                 System.currentTimeMillis()
         );
     }
+
+    public ResponseMessage getMessageForSuccessUserRegistration(long id){
+        return new ResponseMessage(
+                "User with id: " + id + " registered!",
+                System.currentTimeMillis()
+        );
+    }
 }

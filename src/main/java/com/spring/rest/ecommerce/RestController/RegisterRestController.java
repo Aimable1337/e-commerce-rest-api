@@ -35,10 +35,10 @@ public class RegisterRestController {
     }
 
     @PostMapping
-    public ResponseEntity<ResponseMessage> registerUser(@RequestBody NewUserDTO newUser, HttpServletRequest request) {
-        long newId = userEditor.register(newUser);
+    public ResponseEntity<ResponseMessage> registerUser(@RequestBody NewUserDTO newUserDTO, HttpServletRequest request) {
+        long newId = userEditor.register(newUserDTO);
         return new ResponseEntity<>(
-                responseMessageGenerator.getResponseForSuccessPostMethod(newId),
+                responseMessageGenerator.getMessageForSuccessUserRegistration(newId),
                 headerGenerator.getHeadersForSuccessPostMethod(request.getRequestURI(), newId),
                 HttpStatus.CREATED
         );

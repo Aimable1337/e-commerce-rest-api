@@ -56,7 +56,7 @@ public class EmployeeOrderPanelRestController {
         orderService.save(theOrder);
         return new ResponseEntity<>(
                 theOrder,
-                headerGenerator.getHeadersForSuccessPostMethod(request, theOrder.getOrderId()),
+                headerGenerator.getHeadersForSuccessPostMethod(request.getRequestURI(), theOrder.getOrderId()),
                 HttpStatus.CREATED
         );
     }
@@ -77,7 +77,7 @@ public class EmployeeOrderPanelRestController {
     }
 
     @DeleteMapping("/orders/{theId}")
-    public ResponseEntity<ResponseMessage> deleteOrder(@PathVariable long theId) throws Exception {
+    public ResponseEntity<ResponseMessage> deleteOrder(@PathVariable long theId) {
         orderService.deleteById(theId);
         return new ResponseEntity<>(
                 responseMessageGenerator.getResponseForSuccessDeleteMethod(theId),

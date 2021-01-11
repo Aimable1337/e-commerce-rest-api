@@ -4,7 +4,6 @@ import com.spring.rest.ecommerce.DTO.User.NewPasswordDTO;
 import com.spring.rest.ecommerce.DTO.User.NewUserDetailsDTO;
 import com.spring.rest.ecommerce.DTO.User.NewUserNameDTO;
 import com.spring.rest.ecommerce.DTO.User.UserDetailViewDTO;
-import com.spring.rest.ecommerce.entity.UserDetail;
 import com.spring.rest.ecommerce.headers.HeaderGenerator;
 import com.spring.rest.ecommerce.response.ResponseMessage;
 import com.spring.rest.ecommerce.response.ResponseMessageGenerator;
