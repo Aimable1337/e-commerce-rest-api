@@ -2,7 +2,6 @@ package com.spring.rest.ecommerce.service;
 
 import com.spring.rest.ecommerce.DTO.User.*;
 import com.spring.rest.ecommerce.entity.User;
-import com.spring.rest.ecommerce.entity.UserDetail;
 import com.spring.rest.ecommerce.exception.NotFoundException;
 import com.spring.rest.ecommerce.exception.OldPasswordInvalid;
 import com.spring.rest.ecommerce.exception.UsernameAlreadyExistException;

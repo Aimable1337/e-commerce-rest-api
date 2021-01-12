@@ -1,8 +1,8 @@
 package com.spring.rest.ecommerce.RestController;
 
-import com.spring.rest.ecommerce.entity.Product;
+import com.spring.rest.ecommerce.DTO.Product.ProductViewDTO;
 import com.spring.rest.ecommerce.headers.HeaderGenerator;
-import com.spring.rest.ecommerce.service.ProductService;
+import com.spring.rest.ecommerce.service.ProductViewer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,20 +13,20 @@ import java.util.List;
 @RestController
 public class ProductRestController {
 
-    private final ProductService productService;
+    private final ProductViewer productViewer;
 
     private final HeaderGenerator headerGenerator;
 
     @Autowired
-    public ProductRestController(ProductService theProductService,
-                                 HeaderGenerator theHeaderGenerator){
-        headerGenerator = theHeaderGenerator;
-        productService = theProductService;
+    public ProductRestController(ProductViewer productViewer,
+                                 HeaderGenerator headerGenerator){
+        this.headerGenerator = headerGenerator;
+        this.productViewer = productViewer;
     }
 
     @GetMapping("/products")
-    public ResponseEntity<List<Product>> getProducts(){
-        List<Product> products = productService.findAll();
+    public ResponseEntity<List<ProductViewDTO>> getProducts(){
+        List<ProductViewDTO> products = productViewer.viewAll();
             return new ResponseEntity<>(
                     products,
                     headerGenerator.getHeadersForSuccessGetMethod(),
@@ -35,9 +35,9 @@ public class ProductRestController {
     }
 
     @GetMapping("/products/{theId}")
-    public ResponseEntity<Product> getProductById(@PathVariable long theId){
+    public ResponseEntity<ProductViewDTO> getProductById(@PathVariable long theId){
             return new ResponseEntity<>(
-                    productService.findByID(theId),
+                    productViewer.viewByID(theId),
                     headerGenerator.getHeadersForSuccessGetMethod(),
                     HttpStatus.OK
             );

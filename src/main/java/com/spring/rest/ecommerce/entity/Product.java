@@ -25,6 +25,13 @@ public class Product {
         this.productPrice = productPrice;
     }
 
+    public Product(long id, String productName, String productCategory, int productPrice) {
+        this.productID = id;
+        this.productName = productName;
+        this.productCategory = productCategory;
+        this.productPrice = productPrice;
+    }
+
     public long getProductID() {
         return productID;
     }
