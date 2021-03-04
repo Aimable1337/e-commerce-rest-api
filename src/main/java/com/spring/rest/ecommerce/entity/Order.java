@@ -16,7 +16,7 @@ public class Order {
 
     private LocalDate orderDate;
 
-    @OneToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE,
+    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE,
             CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "order_user_id")
     private User userId;
