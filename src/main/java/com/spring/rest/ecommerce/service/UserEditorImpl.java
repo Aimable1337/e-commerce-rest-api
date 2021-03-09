@@ -101,8 +101,4 @@ public class UserEditorImpl implements UserEditor {
         userRepository.deleteById(theId);
     }
 
-    @Bean
-    public PasswordEncoder passwordEncoder(){
-        return new BCryptPasswordEncoder();
-    }
 }

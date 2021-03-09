@@ -4,6 +4,7 @@ import com.spring.rest.ecommerce.entity.User;
 
 import com.spring.rest.ecommerce.entity.UserAuthority;
 import com.spring.rest.ecommerce.entity.UserDetail;
+import com.spring.rest.ecommerce.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,7 @@ public class LoginTest {
     private MockMvc mockMvc;
 
     @Autowired
-    private UserService userService;
+    private UserRepository userRepository;
 
     @BeforeEach
     void init(){
@@ -34,7 +35,7 @@ public class LoginTest {
                 new UserDetail("test", "test", "test", "test", "test","test", "test"),
                 new UserAuthority("test", "ROLE_USER")
         );
-        userService.save(testUser);
+        userRepository.save(testUser);
     }
 
     @Test
