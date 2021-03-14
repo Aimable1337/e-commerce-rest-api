@@ -17,4 +17,15 @@ public class UserViewDTO {
         this.userDetails = source.getUserDetails();
     }
 
+    public long getUserId() {
+        return userId;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public UserDetail getUserDetails() {
+        return userDetails;
+    }
 }

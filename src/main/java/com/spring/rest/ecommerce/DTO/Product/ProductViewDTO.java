@@ -12,4 +12,12 @@ public class ProductViewDTO {
         this.productName = source.getProductName();
         this.productPrice = source.getProductPrice();
     }
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public int getProductPrice() {
+        return productPrice;
+    }
 }
