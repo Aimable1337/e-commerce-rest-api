@@ -20,7 +20,8 @@ public class UserEditorImpl implements UserEditor {
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserEditorImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserEditorImpl(UserRepository userRepository,
+                          PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
     }
@@ -29,7 +30,8 @@ public class UserEditorImpl implements UserEditor {
     public long register(NewUserDTO newUserDTO) {
         User newUser = newUserDTO.toEntity();
         newUser.setUserId(0);
-        newUser.setPassword("{bcrypt}" + passwordEncoder.encode(newUser.getPassword()));
+        newUser.setEnabled(true);
+        newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
         userRepository.save(newUser);
         return newUser.getUserId();
     }
@@ -52,7 +54,7 @@ public class UserEditorImpl implements UserEditor {
                 () -> new NotFoundException("User not found in data base")
         );
         if (checkIfOldPasswordIsValid(newPasswordDTO.getOldPassword(), user.getPassword())){
-            user.setPassword("{bcrypt}" + passwordEncoder.encode(newPasswordDTO.getNewPassword()));
+            user.setPassword(passwordEncoder.encode(newPasswordDTO.getNewPassword()));
             userRepository.save(user);
         } else {
             throw new OldPasswordInvalid("Old password is invalid");
@@ -81,7 +83,7 @@ public class UserEditorImpl implements UserEditor {
 
     @Override
     public boolean checkIfOldPasswordIsValid(String oldPassword, String userPassword) {
-        return passwordEncoder.matches(oldPassword, userPassword.replace("{bcrypt}", ""));
+        return passwordEncoder.matches(oldPassword, userPassword);
     }
 
     @Override

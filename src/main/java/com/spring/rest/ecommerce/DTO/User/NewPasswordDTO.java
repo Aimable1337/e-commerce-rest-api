@@ -21,4 +21,12 @@ public class NewPasswordDTO {
     public String getOldPassword() {
         return oldPassword;
     }
+
+    public void setNewPassword(String newPassword) {
+        this.newPassword = newPassword;
+    }
+
+    public void setOldPassword(String oldPassword) {
+        this.oldPassword = oldPassword;
+    }
 }

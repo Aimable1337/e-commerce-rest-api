@@ -15,4 +15,7 @@ public class NewUserNameDTO {
         return newUserName;
     }
 
+    public void setNewUserName(String newUserName) {
+        this.newUserName = newUserName;
+    }
 }

@@ -23,7 +23,7 @@ public class AuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccess
     public AuthenticationSuccessHandler(
             @Value("${jwt.expirationTime}") long expirationTime,
             @Value("${jwt.secret}") String secret){
-        this.expirationTime = expirationTime;
+        this.expirationTime = System.currentTimeMillis() + expirationTime;
         this.secret = secret;
     }
 
@@ -33,8 +33,9 @@ public class AuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccess
         UserDetails principal = (UserDetails) authentication.getPrincipal();
         String token = JWT.create()
                 .withSubject(principal.getUsername())
-                .withExpiresAt(new Date(System.currentTimeMillis() + expirationTime))
+                .withExpiresAt(new Date(expirationTime))
                 .sign(Algorithm.HMAC512(secret));
-       response.addHeader("Authorization", "Bearer " + token);
+        response.addHeader("Authorization", "Bearer " + token);
+        response.addHeader("expiresAt", String.valueOf(expirationTime));
     }
 }

@@ -11,4 +11,11 @@ public class NewUsersAuthorityDTO {
         return authority;
     }
 
+    public String getNewAuthority() {
+        return newAuthority;
+    }
+
+    public void setNewAuthority(String newAuthority) {
+        this.newAuthority = newAuthority;
+    }
 }

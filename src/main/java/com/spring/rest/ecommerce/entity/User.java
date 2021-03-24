@@ -50,7 +50,9 @@ public class User {
 
     public void setUserName(String userName) {
         this.userName = userName;
-        this.userAuthority.setUsername(userName);
+        // causes null pointer exception
+        // TODO: develop save way to do this
+        //this.userAuthority.setUsername(userName);
     }
 
     public String getPassword() {
