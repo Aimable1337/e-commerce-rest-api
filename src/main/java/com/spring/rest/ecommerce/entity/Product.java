@@ -1,5 +1,7 @@
 package com.spring.rest.ecommerce.entity;
 
+import com.spring.rest.ecommerce.DTO.Product.ProductViewDTO;
+
 import javax.persistence.*;
 
 @Entity
@@ -72,5 +74,14 @@ public class Product {
                 ", productCategory='" + productCategory + '\'' +
                 ", productPrice=" + productPrice +
                 '}';
+    }
+
+    public ProductViewDTO toDTO(){
+        return ProductViewDTO.builder()
+                .withProductId(productID)
+                .withProductName(productName)
+                .withProductPrice(productPrice)
+                .withProductCategory(productCategory)
+                .build();
     }
 }

@@ -27,21 +27,21 @@ public class ProductViewerImpl implements ProductViewer{
             throw new NotFoundException("We have no products");
 
         return products.stream()
-                .map(ProductViewDTO::new)
+                .map(Product::toDTO)
                 .collect(Collectors.toList());
     }
 
     @Override
     public ProductViewDTO viewByID(long theId) {
         return productRepository.findById(theId)
-                .map(ProductViewDTO::new)
+                .map(Product::toDTO)
                 .orElseThrow(() -> new NotFoundException("Product with id: " + theId + " not found"));
     }
 
     @Override
     public ProductViewDTO viewByProductName(String productName) {
         return productRepository.findProductByProductName(productName)
-                .map(ProductViewDTO::new)
+                .map(Product::toDTO)
                 .orElseThrow(() -> new NotFoundException("Product with name: " + productName + " not found"));
     }
 

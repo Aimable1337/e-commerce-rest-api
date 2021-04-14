@@ -52,7 +52,7 @@ public class UserOrdersRestController {
     }
 
     @GetMapping("/order-status/{theId}") // TODO
-    public ResponseEntity<?> getMyOrdersStatus() throws Exception {
+    public ResponseEntity<?> getMyOrdersStatus(@PathVariable String theId) throws Exception {
         throw new Exception("Not implemented yet!");
     }
 

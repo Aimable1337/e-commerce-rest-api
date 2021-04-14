@@ -28,6 +28,9 @@ public class UserEditorImpl implements UserEditor {
 
     @Override
     public long register(NewUserDTO newUserDTO) {
+        if (userRepository.existsByUserName(newUserDTO.getUserName()))
+            throw new UsernameAlreadyExistException("User with this username already exist");
+
         User newUser = newUserDTO.toEntity();
         newUser.setUserId(0);
         newUser.setEnabled(true);
